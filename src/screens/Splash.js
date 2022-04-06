@@ -57,8 +57,6 @@ export default function Splash({navigation}) {
     }
 })
   return (
-    
-      
       <ImageBackground  source={require('../../assets/splash.png')}  style={styles.theImage}>
       <View
       style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
