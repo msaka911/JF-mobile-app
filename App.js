@@ -10,7 +10,7 @@ import Webview from './src/screens/WebView';
 import Policy from './src/screens/Policy';
 import ClaimGuide from './src/screens/ClaimGuide';
 import Emergency from './src/screens/Emergency';
-
+import Feedback from './src/feedback';
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -51,6 +51,7 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="Policy" component={Policy}   options={{ title: 'Policy Wording' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimGuide" component={ClaimGuide} options={{ title: 'Claim Guide' , headerStyle:{backgroundColor:'#006400'}}}  />
       <Drawer.Screen name="Emergency" component={Emergency}  options={{ title: 'Emergency Report' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Drawer.Screen name="Feedback" component={Feedback}  options={{ title: 'Feedback' , headerStyle:{backgroundColor:'#006400'}}}/>
     </Drawer.Navigator>
   );
 }
@@ -78,7 +79,7 @@ const App = ({navigation,toggleDrawer}) => {
         
         >
         <Stack.Screen name="MainDrawer" component={MainDrawerNavigation}/>
-
+        
       </Stack.Navigator>
 
     </NavigationContainer>

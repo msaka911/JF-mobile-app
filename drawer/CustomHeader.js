@@ -20,11 +20,9 @@ function CustomHeader(props) {
             onPress={toggleDrawer}
             style={styles.leftButton}
             testID="CustomHeader-toggleDrawer">
-            <Text style={styles.buttonTxt}>MENU</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.header}>
-          <Text style={styles.headerTxt}>HEADER</Text>
         </View>
       </View>
     </SafeAreaView>

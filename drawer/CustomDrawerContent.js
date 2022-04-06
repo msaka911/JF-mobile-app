@@ -13,7 +13,6 @@ import {
 import { Entypo } from '@expo/vector-icons';
 
 
-
 function CustomDrawerContent(props) {
   const onItemPress = (key) => {
     const filteredMainDrawerRoutes = props.drawerItems.find((e) => {
@@ -79,7 +78,7 @@ function CustomDrawerContent(props) {
 
 
        <TouchableOpacity style={{marginTop:300, justifyContent: 'flex-end'}} onPress={() => {
-                console.log("feedback");}}>
+             props.navigation.navigate("Feedback");}}>
         <Text style={[styles.icon, styles.title]}>Feedback</Text>
       </TouchableOpacity>
 
