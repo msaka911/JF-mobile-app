@@ -7,36 +7,39 @@ import { Input, Button } from 'react-native-elements';
 import Spacer from './Spacer';
 import { useState } from 'react';
 
+//send email in backend instead frontend
 
-
-const sgMail = require('@sendgrid/mail');
-const API_KEY = REACT_APP_SEND_GRID_API
+// const sgMail = require('@sendgrid/mail');
+// const API_KEY = REACT_APP_SEND_GRID_API
 
 const Feedback=()=>{
    
     const [content, setContent]=useState("")
 
-    const onButtonClick=()=>{
-        sgMail.setApiKey(API_KEY);
-        const msg = {
-            to: 'zeyu@otcww.com',
-            from: '14zx4@queensu.ca', // Use the email address or domain you verified above
-            subject: 'Feedback',
-            text: content,
-            html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-          };
-          (async () => {
-            try {
-              await sgMail.send(msg);
-            } catch (error) {
-              console.error(error);
-              if (error.response) {
-                console.error(error.response.body)
-              }
-            }
-          })();
-    }
+    // const onButtonClick=()=>{
+    //     sgMail.setApiKey(API_KEY);
+    //     const msg = {
+    //         to: 'zeyu@otcww.com',
+    //         from: '14zx4@queensu.ca', // Use the email address or domain you verified above
+    //         subject: 'Feedback',
+    //         text: content,
+    //         html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    //       };
+    //       (async () => {
+    //         try {
+    //           await sgMail.send(msg);
+    //         } catch (error) {
+    //           console.error(error);
+    //           if (error.response) {
+    //             console.error(error.response.body)
+    //           }
+    //         }
+    //       })();
+    // }
 
+    const onButtonClick=()=>{
+        console.log(content + " email sent")
+    }
     return(
         <View>
           <Spacer>

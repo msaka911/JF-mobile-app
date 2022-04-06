@@ -11,6 +11,7 @@ import Policy from './src/screens/Policy';
 import ClaimGuide from './src/screens/ClaimGuide';
 import Emergency from './src/screens/Emergency';
 import Feedback from './src/feedback';
+import Splash from './src/screens/Splash';
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -40,10 +41,11 @@ function MainDrawerNavigation({navigation }) {
       headerLeft: navigation => <AntDesign color="white" style={{marginLeft:20}} size={24} name="menuunfold" onPress={ toggleDrawer} />,
     }
     }
-      initialRouteName="Home"
+      initialRouteName="Splash"
       drawerContent={(props) => (
         <CustomDrawerContent drawerItems={drawerItemsMain} {...props} />
       )}>
+      <Stack.Screen name="Splash" component={Splash}  options={{ headerShown: false}}/>
       <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home' , headerStyle:{backgroundColor:'#006400'}}}  />
       <Drawer.Screen name="ContactUs" component={ContactUs} options={{ title: 'Contact Us', headerStyle:{backgroundColor:'#006400'} }} />
       <Drawer.Screen name="AboutUs" component={AboutUs} options={{ title: 'About Us' , headerStyle:{backgroundColor:'#006400'}}}/>
@@ -52,6 +54,7 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="ClaimGuide" component={ClaimGuide} options={{ title: 'Claim Guide' , headerStyle:{backgroundColor:'#006400'}}}  />
       <Drawer.Screen name="Emergency" component={Emergency}  options={{ title: 'Emergency Report' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Feedback" component={Feedback}  options={{ title: 'Feedback' , headerStyle:{backgroundColor:'#006400'}}}/>
+      
     </Drawer.Navigator>
   );
 }
