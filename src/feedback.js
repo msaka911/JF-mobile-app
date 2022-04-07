@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList,Image, ScrollView,TextInput } from 'react-native';
+import { View, Text, StyleSheet, FlatList,Image, ScrollView,TextInput ,Alert } from 'react-native';
 import { RotateInDownLeft } from 'react-native-reanimated';
 import { Header,Divider } from 'react-native-elements';
-import {REACT_APP_SEND_GRID_API} from '@env'
+import {REACT_APP_BACKEND} from '@env'
 import { Input, Button } from 'react-native-elements';
 import Spacer from './Spacer';
 import { useState } from 'react';
@@ -12,37 +12,41 @@ import { useState } from 'react';
 // const sgMail = require('@sendgrid/mail');
 // const API_KEY = REACT_APP_SEND_GRID_API
 
+
 const Feedback=()=>{
    
     const [content, setContent]=useState("")
+    const [name, setName]=useState("")
+    const [email, setEmail]=useState("")
+    const [msg,setMsg]=useState("")
 
-    // const onButtonClick=()=>{
-    //     sgMail.setApiKey(API_KEY);
-    //     const msg = {
-    //         to: 'zeyu@otcww.com',
-    //         from: '14zx4@queensu.ca', // Use the email address or domain you verified above
-    //         subject: 'Feedback',
-    //         text: content,
-    //         html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    //       };
-    //       (async () => {
-    //         try {
-    //           await sgMail.send(msg);
-    //         } catch (error) {
-    //           console.error(error);
-    //           if (error.response) {
-    //             console.error(error.response.body)
-    //           }
-    //         }
-    //       })();
-    // }
 
+    const axios = require('axios');
+    
     const onButtonClick=()=>{
-        console.log(content + " email sent")
+        axios({
+          method: 'post',
+          url: REACT_APP_BACKEND+'/feedback',
+          data: {
+            name,
+            email,
+            content
+          }
+        }).then(response=>{
+          setMsg('Email sent')
+        }).catch(error=>{
+          setMsg('Failed to send')
+        })
+        setContent("")
+        setName("")
+        setEmail("")
+        Alert.alert(`${msg} `,'',[])
     }
     return(
         <View>
           <Spacer>
+          <Input placeholder="name" value={name} onChangeText={(inputContent)=>setName(inputContent)} />
+          <Input placeholder="your email" value={email} onChangeText={(inputContent)=>setEmail(inputContent)} />
         <TextInput
         style={styles.textArea}
         underlineColorAndroid="transparent"
@@ -50,6 +54,7 @@ const Feedback=()=>{
         placeholderTextColor="grey"
         numberOfLines={10}
         multiline={true}
+        value={content}
         onChangeText={(inputContent)=>setContent(inputContent)}
         />
       </Spacer>

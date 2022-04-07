@@ -27,10 +27,9 @@ const Policy=(props)=>{
 
    // const link="http://192.168.3.167:3000/hello?policy_number=JES61000";
 
-   const link=REACT_APP_BACKEND
+   const link=REACT_APP_BACKEND+'/policyword?policy_number=JFR63100'
    
    React.useEffect(() => {
-      
       const unsubscribe = props.navigation.addListener('focus', () => {
          setNumber(number+1)
       });

@@ -53,7 +53,7 @@ export default function Splash({navigation}) {
     theText:{
         color:"black",
         fontSize:40,
-        fontWeight:100,
+        fontWeight:"100",
     }
 })
   return (

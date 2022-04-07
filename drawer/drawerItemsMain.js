@@ -11,6 +11,11 @@ export const drawerItemsMain = [
       route: {nav: 'Policy', routeName: 'Policy', title: 'Policy'},
       
     },
+    {
+      key: 'ClaimForm',
+      title: 'ClaimForm',
+      route: {nav: 'ClaimForm', routeName: 'ClaimForm', title: 'ClaimForm'},
+    },
 
     {
       key: 'ContactUs',
