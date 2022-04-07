@@ -37,16 +37,18 @@ const ClaimForm=(props)=>{
     inputStyle:{
         width:100,
         alignSelf:'center'
-    }})
+    },
+    textStyle:{
+        fontSize:25,
+     }})
 
 
    return(
     <View style={styles.viewStyle}>
-   
      <Spacer/>
     <Input style={styles.inputStyle} placeholder="policy number" value={policy_number} onChangeText={(inputContent)=>setPolicy(inputContent)}/>
     <Spacer/>
-    <Button title="Submit" onPress={onSubmit}/>
+    <TouchableOpacity style={styles.buttonStyle} onPress={onSubmit}><Text style={styles.textStyle}> Submit</Text></TouchableOpacity>
     {pressed?<Form  link={link}/>:null}
    </View> 
    )

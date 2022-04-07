@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { WebView } from 'react-native-webview';
 
-const Form=(props)=>{
-
+const Form=({route,navigation})=>{
+    const { link } = route.params
     return(
-        <WebView originWhitelist={['intent://']} source={{uri:props.link}} style={{flex:1}}/>
+        <WebView  source={{uri:link}} style={{flex:1}}/>
     )
 }
 
 export default Form;
+
+
+//originWhitelist={['intent://']}

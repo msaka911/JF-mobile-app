@@ -1,48 +1,57 @@
 import * as React from 'react';
-import { WebView } from 'react-native-webview';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import {REACT_APP_BACKEND} from '@env'
-
+import Spacer from '../Spacer';
+import Form from './Form';
+import { Input } from 'react-native-elements';
 
 const Policy=(props)=>{
-    // async function pdfFile(){
-    //         await fetch('http://10.0.2.2:3000/hello?policy_number=JES61000',{
-    //         method:'GET',
-    //         headers:{
-    //         'Content-Type': 'application/json',
-    //       },
-    //       }
-
-    //     ).then((res) => {
-    //        console.log(res)
-    //        return response.blob()
-    //     })
-    //   }
-
-    
-    // const blob= await pdfFile()
-
-   const [number,setNumber]=useState(0)
+   const [policy_number,setPolicy]=useState("")
+   const [pressed, setPress]=useState(false)
+   // const [number,setNumber]=useState(0)
 
    // const link="http://192.168.3.167:3000/hello?policy_number=JES61000";
 
-   const link=REACT_APP_BACKEND+'/policyword?policy_number=JFR63100'
+   const [link, setLink]=useState(" ")
+   // const link=REACT_APP_BACKEND+'/policyword?policy_number=JFR63100'
    
-   React.useEffect(() => {
-      const unsubscribe = props.navigation.addListener('focus', () => {
-         setNumber(number+1)
-      });
-      return 
-    }, [props.navigation,number]);
-   
+   // React.useEffect(() => {
+   //    const unsubscribe = props.navigation.addListener('focus', () => {
+   //       setNumber(number+1)
+   //    });
+   //    return 
+   //  }, [props.navigation,number]);
+   const onSubmit=()=>{
+      setLink(REACT_APP_BACKEND+`/claimform?policy_number=${policy_number}`)
+      setPolicy("")
+      const link2=link
+      props.navigation.navigate('Form',{link:link2})
+    }
+  const styles = StyleSheet.create({
+   viewStyle:{
+       alignItems:'center',
+       justifyContent:'center',
+       padding:30
+     },
+   inputStyle:{
+       width:100,
+       alignSelf:'center'
+   },
+   buttonStyle:{
+      alignItems: "center",
+   },
+   textStyle:{
+      fontSize:25,
+   }})
+
    return(    
-      <WebView 
-      source={{uri: link}}
-      key={number}
-      style={{flex:1}}
-      >
-      </WebView>
+      <View style={styles.viewStyle}>
+      <Spacer/>
+     <Input style={styles.inputStyle} placeholder="policy number" value={policy_number} onChangeText={(inputContent)=>setPolicy(inputContent)}/>
+     <Spacer/>
+     <TouchableOpacity style={styles.buttonStyle} onPress={onSubmit}><Text style={styles.textStyle}> Submit</Text></TouchableOpacity>
+    </View>
    )
 }
 
