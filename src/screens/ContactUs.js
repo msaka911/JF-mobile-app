@@ -1,16 +1,48 @@
-import React from 'react';
-import { Text, StyleSheet, View,Image ,ScrollView} from 'react-native';
+import React,{useEffect,useRef}from 'react';
+import { Text, StyleSheet, View,Image ,ScrollView,Animated} from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Fragment } from 'react/cjs/react.production.min';
 import vancouver from '../../assets/vancouver.jpg'
 import toronto from '../../assets/toronto.jpg'
 
-import { Header,Divider } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 const ContactUs = () => {
-  const name = 'Stephen';
+  const fadeAnim = useRef(new Animated.Value(-5)).current
+  
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 0.2,
+        duration: 1000,
+        useNativeDriver: true
+      }
+    ).start();
+  }, [fadeAnim])
+
+  const yVal = fadeAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 30],
+  });
+
+  const animStyle = {
+    transform: [
+      {
+        translateY: yVal,
+      },
+    ]
+  };
+
+
+
 
   return (
-    <Fragment>
+   <Animated.View                 // Special animatable View
+        style={
+          animStyle
+              // Bind opacity to animated value
+      }>
     <ScrollView style={styles.viewStyle}>
     <Text style={styles.titleStyle}>Sales Vancouver Office</Text>
 
@@ -44,7 +76,8 @@ const ContactUs = () => {
     E-mail: info@jfgroup.ca
     </Text>
     </ScrollView>
-    </Fragment>
+    </Animated.View>
+
   );
 };
 
@@ -53,8 +86,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#F0F8FF',
     borderWidth:2,
     borderRadius:7,
-    marginHorizontal:8,
-    marginTop:5
   },
   textStyle: {
     alignSelf:'center',

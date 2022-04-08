@@ -33,9 +33,9 @@ const Feedback=()=>{
               content
             }
           }).then(()=>{
-            Alert.alert('Email sent','',[])}
+            Alert.alert('Thanks for your feedback','',[])}
           ).catch(error=>{
-            Alert.alert('Failed to send','',[])
+            Alert.alert('Failed to send','Tyr it later',[])
           })
           setContent("")
           setName("")
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     textArea: {
       borderColor:"black",
       borderWidth: 1,
-      margin:5,
+      padding:5,
       height: 200,
       justifyContent: "flex-start",
       marginTop:30

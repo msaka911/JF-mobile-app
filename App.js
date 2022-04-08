@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import ContactUs from './src/screens/ContactUs';
 import AboutUs from './src/screens/AboutUs';
-import Webview from './src/screens/WebView';
+import Webview from './src/screens/Webview';
 import Policy from './src/screens/Policy';
 import ClaimGuide from './src/screens/ClaimGuide';
 import Emergency from './src/screens/Emergency';
@@ -59,7 +59,7 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="Emergency" component={Emergency}  options={{ title: 'Emergency Report' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Feedback" component={Feedback}  options={{ title: 'Feedback' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimForm" component={ClaimForm}  options={{ title: 'ClaimForm' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Stack.Screen name="ClaimDetail" component={ClaimDetail}  options={{ title: 'ClaimDetail' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Drawer.Screen name="ClaimDetail" component={ClaimDetail}  options={{ title: 'ClaimDetail' , headerStyle:{backgroundColor:'#006400'}}}/>
     </Drawer.Navigator>
   );
 }
@@ -87,9 +87,8 @@ const App = ({navigation,toggleDrawer}) => {
         
         >
         <Stack.Screen name="MainDrawer" component={MainDrawerNavigation}/>
-        
-      </Stack.Navigator>
 
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
