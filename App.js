@@ -13,6 +13,7 @@ import Emergency from './src/screens/Emergency';
 import Feedback from './src/feedback';
 import Splash from './src/screens/Splash';
 import ClaimForm from './src/screens/ClaimForm';
+import ClaimDetail from './src/ClaimDetail';
 
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
@@ -25,6 +26,7 @@ import {DrawerActions} from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons'; 
 
 import { TouchableOpacity } from 'react-native';
+
 
 
 const Drawer = createDrawerNavigator();
@@ -57,6 +59,7 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="Emergency" component={Emergency}  options={{ title: 'Emergency Report' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Feedback" component={Feedback}  options={{ title: 'Feedback' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimForm" component={ClaimForm}  options={{ title: 'ClaimForm' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Stack.Screen name="ClaimDetail" component={ClaimDetail}  options={{ title: 'ClaimDetail' , headerStyle:{backgroundColor:'#006400'}}}/>
     </Drawer.Navigator>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList,Image ,TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet,Image ,TouchableOpacity} from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';  
@@ -7,7 +7,8 @@ import { Entypo } from '@expo/vector-icons';
 
 
 
-const ClaimGuide=()=>{
+
+const ClaimGuide=({navigation})=>{
 
     return(
         <View style={styles.viewStyle}>
@@ -21,16 +22,14 @@ const ClaimGuide=()=>{
       color="white"
      />}>
         </Button>
-
       <Button style={styles.buttonStyle} title="  Claim amount < $1000" icon={
       <Entypo
       name="info-with-circle"
       size={30}
       color="white"
     />}
-    onPress={()=>console.log("pressed")}
+    onPress={()=>navigation.navigate("ClaimDetail")}
     titleStyle={styles.titleStyle}
-
     >
        </Button>
        </View>

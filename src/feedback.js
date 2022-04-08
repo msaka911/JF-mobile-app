@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList,Image, ScrollView,TextInput ,Alert } from 'react-native';
-import { RotateInDownLeft } from 'react-native-reanimated';
-import { Header,Divider } from 'react-native-elements';
+
 import {REACT_APP_BACKEND} from '@env'
 import { Input, Button } from 'react-native-elements';
 import Spacer from './Spacer';
 import { useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 //send email in backend instead frontend
 
@@ -23,22 +23,27 @@ const Feedback=()=>{
     const axios = require('axios');
     
     const onButtonClick=()=>{
-        axios({
-          method: 'post',
-          url: REACT_APP_BACKEND+'/feedback',
-          data: {
-            name,
-            email,
-            content
-          }
-        }).then(()=>{
-          Alert.alert('Email sent','',[])}
-        ).catch(error=>{
-          Alert.alert('Failed to send','',[])
-        })
-        setContent("")
-        setName("")
-        setEmail("")
+        if(name&&email&&content){
+          axios({
+            method: 'post',
+            url: REACT_APP_BACKEND+'/feedback',
+            data: {
+              name,
+              email,
+              content
+            }
+          }).then(()=>{
+            Alert.alert('Email sent','',[])}
+          ).catch(error=>{
+            Alert.alert('Failed to send','',[])
+          })
+          setContent("")
+          setName("")
+          setEmail("")
+        }
+        else{
+          Alert.alert('Input corret information','',[])
+        }
     }
     return(
         <View>
@@ -56,24 +61,29 @@ const Feedback=()=>{
         onChangeText={(inputContent)=>setContent(inputContent)}
         />
       </Spacer>
-      <Spacer>
-          <Button title="Submit" onPress={onButtonClick} />
-      </Spacer>
+      <Spacer/>
+        <TouchableOpacity onPress={onButtonClick} style={styles.buttonStyle}><Text style={styles.textStyle}>Submit</Text></TouchableOpacity>
+        
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    textAreaContainer: {
-     
-    },
     textArea: {
       borderColor:"black",
       borderWidth: 1,
-      padding: 5,
+      margin:5,
       height: 200,
       justifyContent: "flex-start",
       marginTop:30
+    },
+    buttonStyle:{
+      alignSelf:'center',
+      
+    },
+    textStyle:{
+      fontSize:20,
+      fontWeight:"500"
     }
   })
 

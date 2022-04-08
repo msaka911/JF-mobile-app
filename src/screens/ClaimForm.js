@@ -3,7 +3,7 @@ import { WebView } from 'react-native-webview';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import {REACT_APP_BACKEND} from '@env'
-import { Fragment } from 'react/cjs/react.production.min';
+
 import Spacer from '../Spacer';
 import { Input } from 'react-native-elements';
 import * as Linking from 'expo-linking';
