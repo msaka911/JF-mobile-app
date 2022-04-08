@@ -13,7 +13,7 @@ import Emergency from './src/screens/Emergency';
 import Feedback from './src/feedback';
 import Splash from './src/screens/Splash';
 import ClaimForm from './src/screens/ClaimForm';
-import Form from './src/screens/Form';
+
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -57,7 +57,6 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="Emergency" component={Emergency}  options={{ title: 'Emergency Report' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Feedback" component={Feedback}  options={{ title: 'Feedback' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimForm" component={ClaimForm}  options={{ title: 'ClaimForm' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Stack.Screen name="Form" component={Form}  options={{ title: 'Form' , headerStyle:{backgroundColor:'#006400'}}}/>
     </Drawer.Navigator>
   );
 }

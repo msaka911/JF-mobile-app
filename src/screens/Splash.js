@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View,ImageBackground,StyleSheet } from 'react-native';
+import { Text, View,ImageBackground,StyleSheet ,Image} from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-
+import logo from '../../assets/logo.png';
+import { AntDesign } from '@expo/vector-icons'; 
+import Spacer from '../Spacer';
 export default function Splash({navigation}) {
   const [appIsReady, setAppIsReady] = useState(false);
 
@@ -48,21 +50,31 @@ export default function Splash({navigation}) {
         width: "100%",
         height: "101%",
         resizeMode: "cover",
-        opacity:0.7,
     },
     theText:{
         color:"black",
-        fontSize:40,
-        fontWeight:"100",
+        fontSize:32,
+        fontWeight:"400",
+    },
+    logo:{
+      aspectRatio: 3.2, 
+      resizeMode: 'contain',
+      alignSelf:'center',
     }
 })
+
   return (
-      <ImageBackground  source={require('../../assets/splash.png')}  style={styles.theImage}>
+      <ImageBackground source={require('../../assets/splash.png')} style={styles.theImage} imageStyle={{opacity:0.5, resizeMode: "cover" }}>
       <View
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      style={{ alignItems: 'center', justifyContent: 'center',padding:5, marginTop:220 }}
       onLayout={onLayoutRootView}>
-      <Text style={styles.theText}>JF insurance 👋</Text>
-      <Entypo name="rocket" size={30} />
+       <Image source={logo} style={styles.logo}/>
+      <Text style={styles.theText}>Welcome to JF insurance </Text>
+      <Spacer/>
+      <AntDesign name="facebook-square" size={24} color="black">
+      <Text style={{fontWeight:"100",fontSize:10,}}>@JFinsurnce  · Insurance company</Text>
+      </AntDesign>
+      
       </View>
       </ImageBackground >
     

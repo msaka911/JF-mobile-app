@@ -6,7 +6,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View >
       <Image source={logo} style={styles.logo}/>
-      <Text style={styles.text}>Good Morning!</Text>
+      <Text style={styles.text}>Good Morning</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('ClaimGuide')}

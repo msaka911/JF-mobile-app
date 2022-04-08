@@ -6,27 +6,19 @@ import {REACT_APP_BACKEND} from '@env'
 import { Fragment } from 'react/cjs/react.production.min';
 import Spacer from '../Spacer';
 import { Input } from 'react-native-elements';
-import Form from './Form';
+import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
 
 const ClaimForm=(props)=>{
    const [policy_number,setPolicy]=useState("")
-   const [number,setNumber]=useState(0)
-   const [pressed, setPress]=useState(false)
-   const [link, setLink]=useState("")
-   
-   
-   React.useEffect(() => {
-      const unsubscribe = props.navigation.addListener('focus', () => {
-         setNumber(number+1)
-      });
-      return 
-    }, [props.navigation,number]);
+
+
     
-  const onSubmit=()=>{
-    setLink(REACT_APP_BACKEND+`/claimform?policy_number=${policy_number}`)
-    setPress(true)
+
+  const handleOpenWithWebBrowser = () => {
+    WebBrowser.openBrowserAsync(REACT_APP_BACKEND+`/claimform?policy_number=${policy_number}`);
     setPolicy("")
-  }
+  };
 
   const styles = StyleSheet.create({
     viewStyle:{
@@ -36,7 +28,8 @@ const ClaimForm=(props)=>{
       },
     inputStyle:{
         width:100,
-        alignSelf:'center'
+        alignSelf:'center',
+        marginTop:100
     },
     textStyle:{
         fontSize:25,
@@ -48,12 +41,9 @@ const ClaimForm=(props)=>{
      <Spacer/>
     <Input style={styles.inputStyle} placeholder="policy number" value={policy_number} onChangeText={(inputContent)=>setPolicy(inputContent)}/>
     <Spacer/>
-    <TouchableOpacity style={styles.buttonStyle} onPress={onSubmit}><Text style={styles.textStyle}> Submit</Text></TouchableOpacity>
-    {pressed?<Form  link={link}/>:null}
+    <TouchableOpacity style={styles.buttonStyle} onPress={handleOpenWithWebBrowser}><Text style={styles.textStyle}> Submit</Text></TouchableOpacity>
    </View> 
    )
 }
 
 export default ClaimForm;
-
-{/* {pressed?<WebView source={{uri: link}} key={number} style={{flex:1}}/>:"" } */}

@@ -18,9 +18,8 @@ const Feedback=()=>{
     const [content, setContent]=useState("")
     const [name, setName]=useState("")
     const [email, setEmail]=useState("")
-    const [msg,setMsg]=useState("")
 
-
+    
     const axios = require('axios');
     
     const onButtonClick=()=>{
@@ -32,21 +31,20 @@ const Feedback=()=>{
             email,
             content
           }
-        }).then(response=>{
-          setMsg('Email sent')
-        }).catch(error=>{
-          setMsg('Failed to send')
+        }).then(()=>{
+          Alert.alert('Email sent','',[])}
+        ).catch(error=>{
+          Alert.alert('Failed to send','',[])
         })
         setContent("")
         setName("")
         setEmail("")
-        Alert.alert(`${msg} `,'',[])
     }
     return(
         <View>
           <Spacer>
           <Input placeholder="name" value={name} onChangeText={(inputContent)=>setName(inputContent)} />
-          <Input placeholder="your email" value={email} onChangeText={(inputContent)=>setEmail(inputContent)} />
+          <Input placeholder="contact email" value={email} onChangeText={(inputContent)=>setEmail(inputContent)} keyboardType={'email-address'} />
         <TextInput
         style={styles.textArea}
         underlineColorAndroid="transparent"

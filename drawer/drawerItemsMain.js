@@ -7,13 +7,13 @@ export const drawerItemsMain = [
   },
     {
       key: 'Policy',
-      title: 'Policy Wording',
-      route: {nav: 'Policy', routeName: 'Policy', title: 'Policy'},
+      title: 'PolicyWording Download',
+      route: {nav: 'Policy', routeName: 'Policy', title: 'Policy Wording'},
       
     },
     {
       key: 'ClaimForm',
-      title: 'ClaimForm',
+      title: 'ClaimForm Download',
       route: {nav: 'ClaimForm', routeName: 'ClaimForm', title: 'ClaimForm'},
     },
 
