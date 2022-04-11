@@ -1,7 +1,6 @@
 import React,{ useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList,Image, ScrollView,Animated } from 'react-native';
-import { RotateInDownLeft } from 'react-native-reanimated';
-import { Header,Divider } from 'react-native-elements';
+import { Text, StyleSheet, FlatList,Image, ScrollView,Animated } from 'react-native';
+
 
 const AboutUs = (props) => {
 //----------------------create fade in animation---------------------

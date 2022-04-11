@@ -1,7 +1,5 @@
 import React,{useEffect,useRef}from 'react';
 import { Text, StyleSheet, View,Image ,ScrollView,Animated} from 'react-native';
-import { WebView } from 'react-native-webview';
-import { Fragment } from 'react/cjs/react.production.min';
 import vancouver from '../../assets/vancouver.jpg'
 import toronto from '../../assets/toronto.jpg'
 

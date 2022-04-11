@@ -1,20 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList,Image, ScrollView,TextInput ,Alert } from 'react-native';
+import { View, Text, StyleSheet,TextInput ,Alert } from 'react-native';
 
 import {REACT_APP_BACKEND} from '@env'
-import { Input, Button } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import Spacer from './Spacer';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-//send email in backend instead frontend
 
-// const sgMail = require('@sendgrid/mail');
 // const API_KEY = REACT_APP_SEND_GRID_API
 
-
 const Feedback=()=>{
-   
     const [content, setContent]=useState("")
     const [name, setName]=useState("")
     const [email, setEmail]=useState("")

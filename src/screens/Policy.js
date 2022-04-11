@@ -28,7 +28,7 @@ const Policy=(props)=>{
     };
     
    const handleOpenWithWebBrowser = () => {
-      WebBrowser.openBrowserAsync(REACT_APP_BACKEND+`/claimform?policy_number=${policy_number}`);
+      WebBrowser.openBrowserAsync(REACT_APP_BACKEND+`/claimform?policy_number=${policy_number.toUpperCase()}`);
     };
   
 

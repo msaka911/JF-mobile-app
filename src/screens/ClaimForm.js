@@ -6,17 +6,15 @@ import {REACT_APP_BACKEND} from '@env'
 
 import Spacer from '../Spacer';
 import { Input } from 'react-native-elements';
-import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 
 const ClaimForm=(props)=>{
    const [policy_number,setPolicy]=useState("")
 
-
     
 
   const handleOpenWithWebBrowser = () => {
-    WebBrowser.openBrowserAsync(REACT_APP_BACKEND+`/claimform?policy_number=${policy_number}`);
+    WebBrowser.openBrowserAsync(REACT_APP_BACKEND+`/claimform?policy_number=${policy_number.toUpperCase()}`);
     setPolicy("")
   };
 

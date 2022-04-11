@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import { Text, StyleSheet, View,SafeAreaView ,FlatList, TouchableOpacity,Alert} from 'react-native';
+import { Text, StyleSheet, View ,FlatList, TouchableOpacity,Alert} from 'react-native';
 import {REACT_APP_BACKEND} from '@env'
 import Spacer from './Spacer';
 

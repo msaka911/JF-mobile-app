@@ -1,8 +1,19 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
 import logo from '../../assets/logo.png'
+import LiveChat from 'react-native-livechat'
+
+import * as WebBrowser from 'expo-web-browser';
 
 const HomeScreen = ({ navigation }) => {
+
+  const onClick=()=>{
+    WebBrowser.openBrowserAsync('https://secure.livechatinc.com/licence/14011275/v2/open_chat.cgi');
+  }
+
+
+
+
   return (
     <View >
       <Image source={logo} style={styles.logo}/>
@@ -34,7 +45,12 @@ const HomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttontext} >Emergency Report</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onClick}
+      >
+        <Text style={styles.buttontext} >Live Chat</Text>
+      </TouchableOpacity>
     </View>
   );
 };
