@@ -14,7 +14,7 @@ import Feedback from './src/feedback';
 import Splash from './src/screens/Splash';
 import ClaimForm from './src/screens/ClaimForm';
 import ClaimDetail from './src/ClaimDetail';
-
+import Agentview from './src/screens/Agent';
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -41,16 +41,23 @@ function MainDrawerNavigation({navigation }) {
 
   return (
     <Drawer.Navigator
-    screenOptions={{
-      headerLeft: navigation => <AntDesign color="white" style={{marginLeft:20}} size={24} name="menuunfold" onPress={ toggleDrawer} />,
-    }
-    }
+    screenOptions={({navigation}) => ({
+      headerLeft: ()=> <AntDesign color="white" style={{marginLeft:20}} size={24} name="menuunfold" onPress={ toggleDrawer} />,
+      headerRight: () => (
+         <AntDesign name="back"
+          size={25}
+           style={{marginRight:15}}
+           onPress={() => navigation.navigate('HomeScreen')}
+         />
+       )
+     })}
+
       initialRouteName="Splash"
       drawerContent={(props) => (
         <CustomDrawerContent drawerItems={drawerItemsMain} {...props} />
       )}>
       <Stack.Screen name="Splash" component={Splash}  options={{ headerShown: false}}/>
-      <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home' , headerStyle:{backgroundColor:'#006400'}}}  />
+      <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home' , headerStyle:{backgroundColor:'#006400'}, headerRight:()=>null}} />
       <Drawer.Screen name="ContactUs" component={ContactUs} options={{ title: 'Contact Us', headerStyle:{backgroundColor:'#006400'} }} />
       <Drawer.Screen name="AboutUs" component={AboutUs} options={{ title: 'About Us' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Webview" component={Webview}  options={{ title: 'E-claim Portal' , headerStyle:{backgroundColor:'#006400'}}}/>
@@ -60,6 +67,7 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="Feedback" component={Feedback}  options={{ title: 'Feedback' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimForm" component={ClaimForm}  options={{ title: 'ClaimForm' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimDetail" component={ClaimDetail}  options={{ title: 'ClaimDetail' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Drawer.Screen name="Agentview" component={Agentview}  options={{ title: 'Agent login' , headerStyle:{backgroundColor:'#006400'}}}/>
     </Drawer.Navigator>
   );
 }
@@ -79,7 +87,6 @@ const App = ({navigation,toggleDrawer}) => {
             fontWeight: 'bold',
           },
           headerLeft: navigation => <AntDesign color="white" style={{marginLeft:20}} size={24} name="menuunfold" onPress={ toggleDrawer} />,
-  
           header: (props) => {
             return <CustomHeader {...props} />;
           },          

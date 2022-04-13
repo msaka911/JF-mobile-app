@@ -16,6 +16,11 @@ export const drawerItemsMain = [
       title: 'ClaimForm Download',
       route: {nav: 'ClaimForm', routeName: 'ClaimForm', title: 'ClaimForm'},
     },
+    {
+      key: 'Agentview',
+      title: 'Agent Login',
+      route: {nav: 'Agentview', routeName: 'Agentview', title: 'Agent Login'},
+    },
 
     {
       key: 'ContactUs',

@@ -39,7 +39,7 @@ function CustomDrawerContent(props) {
                 onItemPress(parent.key);
               }}>
               <View style={styles.parentItem}>
-                <Entypo name="arrow-with-circle-right" size={24}></Entypo>
+                <Entypo name="arrow-with-circle-right" size={25}></Entypo>
                 <Text style={[styles.icon, styles.title]}>{parent.title}</Text>
               </View>
             </TouchableOpacity>
@@ -71,9 +71,11 @@ function CustomDrawerContent(props) {
         <View style={styles.centered}>
           <Image
             style={styles.logo}
+            source={require('../assets/jflogo.png')}
           />
 
         </View>
+
         {renderMainDrawer()}
 
 
@@ -81,7 +83,6 @@ function CustomDrawerContent(props) {
              props.navigation.navigate("Feedback");}}>
         <Text style={[styles.icon, styles.title]}>Feedback</Text>
       </TouchableOpacity>
-
       </SafeAreaView>
     </ScrollView>
   );
@@ -96,8 +97,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
   },
   drawerContainer: {
     backgroundColor: '#222222',
@@ -105,23 +106,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     zIndex: 1000,
+    width:270,
   },
   centered: {
+    marginBottom:40,
     alignItems: 'center',
   },
   parentItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderBottomColor: '#F0F0F0',
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: 9,
+    paddingBottom: 9,
   },
   title: {
-    margin: 16,
+    margin: 9,
     fontWeight: 'bold',
     color: '#F0F0F0',
     textAlign: 'center',
+    alignSelf:'center',
   },
 });
 

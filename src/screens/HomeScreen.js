@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
 import logo from '../../assets/logo.png'
-import LiveChat from 'react-native-livechat'
 
 import * as WebBrowser from 'expo-web-browser';
 
