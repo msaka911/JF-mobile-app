@@ -31,5 +31,10 @@ export const drawerItemsMain = [
       key: 'About Us',
       title: 'About Us',
       route: {nav: 'AboutUs', routeName: 'AboutUs', title: 'About Us'},
+    },
+    {
+      key: 'Practice',
+      title: 'Practice',
+      route: {nav: 'Practice', routeName: 'Practice', title: 'Practice'},
     }
   ];
