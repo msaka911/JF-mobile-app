@@ -50,24 +50,36 @@ const Webview=({navigation})=>{
     //       Alert.alert('Please input valid information','',[])
     //     }
     // }
+
+    React.useEffect(()=>{
+
+
+    },[])
     const onButtonClick=()=>{
 
-        
-        var formdata = new FormData();
-        formdata.append('policy', policy_number);
-        formdata.append('birthday', birthday);
-        formdata.append('api_id', id);
-        
-        var requestOptions = {
-          method: 'POST',
-          body: formdata,
-          redirect: 'follow'
-        };
-        
-        fetch("https://claim.otcww.com/Api/login", requestOptions)
-          .then(response => response.text())
-          .then(result => navigation.navigate("ClaimPage",{ data: result,api_id:id}))
-          .catch(error => console.log('error', error));
+        if(policy_number.length>6&birthday.length>8){
+          var formdata = new FormData();
+          formdata.append('policy', policy_number.toUpperCase());
+          formdata.append('birthday', birthday);
+          formdata.append('api_id', id);
+          
+          var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+          };
+          
+          fetch("https://claim.otcww.com/Api/login", requestOptions)
+            .then(response => response.text())
+            .then(result => navigation.navigate("ClaimPage",{ data: result,api_id:id}))
+            .catch(error => console.log('error', error));
+        }
+        else{
+          Alert.alert(
+            "Please input valid info",'',[]
+          )
+        }
+
     }
 
     const styles = StyleSheet.create({
@@ -79,11 +91,24 @@ const Webview=({navigation})=>{
         inputStyle:{
             width:100,
             alignSelf:'center',
-            marginTop:100
+            marginTop:60
         },
         textStyle:{
             fontSize:25,
-         }})
+         },
+        buttonStyle:{
+          alignItems: "center",
+          backgroundColor: "#DDDDDD",
+          padding: 10,
+          marginTop:70,
+          borderRadius:10,
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+          shadowOpacity: 0.7,
+          shadowColor: "grey",
+        }})
 
     return(   
     <View style={styles.viewStyle}>

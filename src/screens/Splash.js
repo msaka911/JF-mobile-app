@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import logo from '../../assets/logo.png';
 import { AntDesign } from '@expo/vector-icons'; 
 import Spacer from '../Spacer';
-
+import splashimage from '../../assets/splash.png'
 
 
 export default function Splash({navigation},props) {
@@ -71,7 +71,7 @@ export default function Splash({navigation},props) {
 })
 
   return (
-      <ImageBackground source={require('../../assets/splash.png')} style={styles.theImage} imageStyle={{opacity:0.5, resizeMode: "cover" }}>
+      <ImageBackground source={splashimage} style={styles.theImage} imageStyle={{opacity:0.5, resizeMode: "cover" }}>
       <View
       style={{ alignItems: 'center', justifyContent: 'center',padding:5, marginTop:220 }}
       onLayout={onLayoutRootView}>

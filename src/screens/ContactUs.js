@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#F0F8FF',
     borderWidth:2,
     borderRadius:7,
+    margin:10
   },
   textStyle: {
     alignSelf:'center',

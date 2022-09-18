@@ -6,9 +6,7 @@ import * as WebBrowser from 'expo-web-browser';
 
 const HomeScreen = ({ navigation }) => {
 
-  const onClick=()=>{
-    WebBrowser.openBrowserAsync('https://secure.livechatinc.com/licence/14011275/v2/open_chat.cgi');
-  }
+
 
 
 
@@ -40,15 +38,16 @@ const HomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
+        onPress={() => navigation.navigate('Agentview')}
+      >
+        <Text style={styles.buttontext} >Agent Login</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => navigation.navigate('Emergency')}
       >
         <Text style={styles.buttontext} >Emergency Report</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={onClick}
-      >
-        <Text style={styles.buttontext} >Live Chat</Text>
       </TouchableOpacity>
     </View>
   );
@@ -59,27 +58,34 @@ const styles = StyleSheet.create({
     color:'black',
     alignSelf:'center',
     fontWeight:'bold',
-    fontSize: 30,
+    fontSize: 35,
   },
   button:{
     
-    marginTop: 20,
+    marginTop: 30,
     alignSelf:'center',
     justifyContent:'center',
     backgroundColor:'hsl(200, 50%, 100%)',
-    borderRadius:10,
+    borderRadius:20,
     padding:3,
-    width:200,
-    height:50,
-    borderWidth:2,
-    borderColor:'black'
+    width:300,
+    height:80,
+    
+    borderColor:'black',
+    shadowOpacity: 0.7,
+    shadowColor: "grey",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    }
     
   },
   buttontext:{
     color:'black',
     alignSelf:'center',
     justifyContent:'center',
-    fontWeight:'900',
+    fontWeight:'500',
+    fontSize:25
   },
   logo:{
     aspectRatio: 3.2, 

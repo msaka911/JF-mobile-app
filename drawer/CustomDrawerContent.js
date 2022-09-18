@@ -79,7 +79,7 @@ function CustomDrawerContent(props) {
         {renderMainDrawer()}
 
 
-       <TouchableOpacity style={{marginTop:300, justifyContent: 'flex-end'}} onPress={() => {
+       <TouchableOpacity style={{marginTop:200, justifyContent: 'flex-end'}} onPress={() => {
              props.navigation.navigate("Feedback");}}>
         <Text style={[styles.icon, styles.title]}>Feedback</Text>
       </TouchableOpacity>
