@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity,LayoutAnimation,Animated,useWindowDimensions,ScrollView } from 'react-native';
 import { useState, useEffect,useRef} from 'react';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import uniqueId from 'lodash/uniqueId'
 
 
 const ClaimItem=({item})=>{
   const[showDetail, setShow]=useState(false);
 
   const fadeAnim = useRef(new Animated.Value(0)).current
-   
 
   useEffect(() => {
       Animated.timing(
@@ -24,6 +24,8 @@ const ClaimItem=({item})=>{
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const { width: windowWidth } = useWindowDimensions();
+
+
 
   return(
     <Card  mode="outlined">
@@ -68,7 +70,13 @@ const ClaimItem=({item})=>{
             >
             {Object.keys(item.items).map((claimItem)=>{
             return( 
-            <View style={{ width: windowWidth}} key={item.items[claimItem].claim_item_no}>
+            <View style={{ width: windowWidth,margin:5}} key={item.items[claimItem].claim_item_no+ uniqueId('id')}>
+
+          
+
+
+
+
             <Card   mode="outlined">
             <Card.Content>
             <Title>{item.items[claimItem].diagnosis}</Title>

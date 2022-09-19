@@ -1,6 +1,5 @@
-import { WebView } from 'react-native-webview';
 import * as React from 'react';
-import { useId } from 'react'
+import { FontAwesome } from "@expo/vector-icons";
 
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity,Alert } from 'react-native';
 import { useState } from 'react';
@@ -9,16 +8,23 @@ import uniqueId from 'lodash/uniqueId'
 
 import Spacer from '../Spacer';
 import { Input } from 'react-native-elements';
+import DatePicker from 'react-native-date-picker'
 
 
 const Webview=({navigation})=>{
     const [policy_number,setPolicy]=useState("")
     const [birthday,setBirthday]=useState("")
 
+    const [date, setDate] = useState(new Date())
+    const [open, setOpen] = useState(false)
+
     const id = uniqueId('jfinsurancepolicy')
     var axios = require('axios');
     var FormData = require('form-data');
+    
 
+    const input = React.createRef();
+    
     // const onButtonClick=()=>{
         
     //     if(policy_number&&birthday){ 
@@ -52,9 +58,9 @@ const Webview=({navigation})=>{
     // }
 
     React.useEffect(()=>{
-
-
+      input.current.focus();
     },[])
+
     const onButtonClick=()=>{
 
         if(policy_number.length>6&birthday.length>8){
@@ -89,9 +95,10 @@ const Webview=({navigation})=>{
             padding:30
           },
         inputStyle:{
-            width:100,
             alignSelf:'center',
-            marginTop:60
+            marginTop:40,
+            flexDirection: 'row',
+            alignItems:'baseline'
         },
         textStyle:{
             fontSize:25,
@@ -113,9 +120,29 @@ const Webview=({navigation})=>{
     return(   
     <View style={styles.viewStyle}>
        <Spacer/>
-       <Input style={styles.inputStyle} placeholder="policy number" value={policy_number} onChangeText={(inputContent)=>setPolicy(inputContent)}/>
+       <Input ref={input} style={styles.inputStyle} placeholder="Policy Number" value={policy_number} onChangeText={(inputContent)=>setPolicy(inputContent)}/>
        <Spacer/>
-       <Input style={styles.inputStyle} placeholder="Birthday" value={birthday} onChangeText={(inputContent)=>setBirthday(inputContent)}/>
+       <Input leftIcon={
+       <FontAwesome
+          name='birthday-cake'
+          size={25}
+          color='black'
+    />} leftIconContainerStyle={{marginRight:5}} onFocus={() => setOpen(true)} containerStyle={styles.inputStyle}  placeholder="Birthday" value={birthday} onChangeText={(inputContent)=>setBirthday(inputContent)}>
+      <DatePicker
+        style={{width: 320, backgroundColor: "white"}}
+        display="default"
+        open={open}
+        date={date}
+        mode="date"
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
+    </Input>
        <TouchableOpacity style={styles.buttonStyle} onPress={onButtonClick}><Text style={styles.textStyle}> Submit</Text></TouchableOpacity>
     </View> 
     )
