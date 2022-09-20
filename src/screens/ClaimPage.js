@@ -27,8 +27,9 @@ const ClaimPage=({route,navigation})=>{
             save('effective_date',parsed.policy.effective_date)
             save('policy',parsed.policy.policy)
             save('toekn',parsed.token)
-    
-    
+            save('api_id',api_id)
+            
+            console.log(parsed.token)
             var formdata = new FormData();
             formdata.append('api_id', api_id);
             formdata.append('token', parsed.token);

@@ -27,7 +27,7 @@ const ClaimForm=(props)=>{
           let policy = await SecureStore.getItemAsync('policy');
           if (policy!==undefined) {
             return(
-             WebBrowser.openBrowserAsync(`${link}?policy_number=${policy.toUpperCase()}`)
+             WebBrowser.openBrowserAsync(`${link}${policy.toUpperCase()}`)
             )
           }
         }

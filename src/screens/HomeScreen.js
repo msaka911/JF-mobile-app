@@ -5,16 +5,14 @@ import logo from '../../assets/logo.png'
 import * as WebBrowser from 'expo-web-browser';
 
 const HomeScreen = ({ navigation }) => {
-
-
-
-
+  var today = new Date()
+  var curHr = today.getHours()
 
 
   return (
     <View >
       <Image source={logo} style={styles.logo}/>
-      <Text style={styles.text}>Good Morning</Text>
+      <Text style={styles.text}>{curHr < 12?"Good Morning":"Good Afternoon"}</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('ClaimGuide')}

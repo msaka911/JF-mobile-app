@@ -84,7 +84,7 @@ const ClaimItem=({item})=>{
             <Paragraph>Claimed Amount: ${item.items[claimItem].amount_billed}</Paragraph>
             <Paragraph>Amount Payable: ${item.items[claimItem].amt_payable}</Paragraph>
             <Paragraph>Status: {item.items[claimItem].status}</Paragraph>
-            <Paragraph>{item.items[claimItem].reason_other||null}</Paragraph>
+            <Paragraph>{item.items[claimItem].reason_other||item.items[claimItem].reason||null}</Paragraph>
             </Card.Content>
             </Card>
             </View>)})}

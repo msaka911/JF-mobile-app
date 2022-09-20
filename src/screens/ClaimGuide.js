@@ -74,7 +74,7 @@ const ClaimGuide=({navigation})=>{
       name="info-with-circle"
       size={23}
       color="black"
-     />   Claim amount {'>'} $1000 </Text>
+     />   Claim amount {'<'} $1000 </Text>
        </TouchableOpacity>
        </View>
     )
