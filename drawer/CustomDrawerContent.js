@@ -18,6 +18,10 @@ function CustomDrawerContent(props) {
     const filteredMainDrawerRoutes = props.drawerItems.find((e) => {
       return e.key === key;
     });
+
+    console.log(key)
+    console.log(filteredMainDrawerRoutes.route)
+
     const selectedRoute = filteredMainDrawerRoutes.route;
     props.navigation.toggleDrawer();
     props.navigation.navigate(selectedRoute.nav, {
@@ -37,6 +41,7 @@ function CustomDrawerContent(props) {
               testID={parent.key}
               onPress={() => {
                 onItemPress(parent.key);
+                // navigation.goBack
               }}>
               <View style={styles.parentItem}>
                 <Entypo name="arrow-with-circle-right" size={25}></Entypo>

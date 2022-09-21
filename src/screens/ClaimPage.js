@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity,LayoutAnimation,Animated,useWindowDimensions,ScrollView, Alert } from 'react-native';
+import { Text, StyleSheet, View, Modal, TouchableOpacity,LayoutAnimation,Animated,useWindowDimensions,ScrollView, Alert } from 'react-native';
 import { useState, useEffect,useRef} from 'react';
 import {REACT_APP_BACKEND} from '@env'
 import { CustomLayoutSpring } from "react-native-animation-layout";
@@ -13,23 +13,19 @@ const ClaimPage=({route,navigation})=>{
     
     const[claimData, setData]=useState();
     
-    async function save(key, value) {
-        await SecureStore.setItemAsync(key, value);
-      }
 
     const { data } = route.params;
     const {api_id}=route.params;
+    
+
+
+    const [modalVisible, setModalVisible] = useState(true);
 
     useEffect(()=>{
         
         var parsed= JSON.parse(data)
         if(parsed!==undefined){
-            save('effective_date',parsed.policy.effective_date)
-            save('policy',parsed.policy.policy)
-            save('toekn',parsed.token)
-            save('api_id',api_id)
-            
-            console.log(parsed.token)
+
             var formdata = new FormData();
             formdata.append('api_id', api_id);
             formdata.append('token', parsed.token);
@@ -70,13 +66,23 @@ const ClaimPage=({route,navigation})=>{
 
     return(
         <ScrollView>
-            {claimData!==undefined?claimData.claims.map((item)=>{
+            {typeof claimData!==`undefined`&&claimData.claims?claimData.claims.map((item)=>{
             return(
                 <ClaimItem key={item.claim_no} item={item}/>
             )
 
-            }):null}
-            
+            }): <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={{  flex:0.6, justifyContent: "center", alignItems: "center", marginTop: 12}}>
+            <Text style={{fontSize:20,justifyContent: 'center',alignItems: 'center'}}>No claims can be found at this moment</Text>
+            </View>
+            </Modal>}
       </ScrollView>
     )
     

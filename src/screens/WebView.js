@@ -93,7 +93,7 @@ const Webview=({navigation})=>{
           
           fetch("https://claim.otcww.com/Api/login", requestOptions)
             .then(response => response.text())
-            .then(result => navigation.navigate("ClaimPage",{ data: result,api_id:id}))
+            .then(result => navigation.navigate("E-claim Portal",{ data: result,api_id:id}))
             .catch(error => console.log('error', error));
         }
         else{

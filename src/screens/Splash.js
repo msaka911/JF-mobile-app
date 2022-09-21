@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View,ImageBackground,StyleSheet ,Image} from 'react-native';
-import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import logo from '../../assets/logo.png';
 import { AntDesign } from '@expo/vector-icons'; 
 import Spacer from '../Spacer';
 import splashimage from '../../assets/splash.png'
-
 
 export default function Splash({navigation},props) {
 
@@ -45,7 +43,7 @@ export default function Splash({navigation},props) {
       // we hide the splash screen once we know the root view has already
       // performed layout.
       await SplashScreen.hideAsync();
-      setTimeout(() => navigation.navigate("HomeScreen"), 2200);
+      setTimeout(() => navigation.navigate("MainDrawer"), 2200);
     }
   }, [appIsReady]);
 

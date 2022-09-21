@@ -17,6 +17,8 @@ import ClaimDetail from './src/ClaimDetail';
 import Agentview from './src/screens/Agent';
 import Practice from './src/screens/Practice';
 import ClaimPage from './src/screens/ClaimPage'
+import ImageBrowser from './src/screens/ImageUpload';
+import User from './src/screens/User';
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -43,35 +45,38 @@ function MainDrawerNavigation({navigation }) {
 
   return (
     <Drawer.Navigator
-    screenOptions={({navigation}) => ({
+    screenOptions={({navigation: { goBack }}) => ({
       headerLeft: ()=> <AntDesign color="white" style={{marginLeft:20}} size={24} name="menuunfold" onPress={ toggleDrawer} />,
       headerRight: () => (
          <AntDesign name="back"
           size={25}
            style={{marginRight:15}}
-           onPress={() => navigation.navigate('HomeScreen')}
+           onPress={()=>goBack()}
          />
        )
      })}
-
-      initialRouteName="Splash"
+      backBehavior="history"
+      initialRouteName="HomeScreen"
       drawerContent={(props) => (
         <CustomDrawerContent drawerItems={drawerItemsMain} {...props} />
       )}>
-      <Stack.Screen name="Splash" component={Splash}  options={{ headerShown: false}}/>
-      <Drawer.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home' , headerStyle:{backgroundColor:'#006400'}, headerRight:()=>null}} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home' , headerStyle:{backgroundColor:'#006400'}, headerRight:()=>null}} />
       <Drawer.Screen name="ContactUs" component={ContactUs} options={{ title: 'Contact Us', headerStyle:{backgroundColor:'#006400'} }} />
       <Drawer.Screen name="AboutUs" component={AboutUs} options={{ title: 'About Us' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Drawer.Screen name="Webview" component={Webview}  options={{ title: 'E-claim Portal' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Stack.Screen name="Webview" component={Webview}  options={{ title: 'E-claim Portal' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Policy" component={Policy}   options={{ title: 'Policy Wording' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimGuide" component={ClaimGuide} options={{ title: 'Claim Guide' , headerStyle:{backgroundColor:'#006400'}}}  />
       <Drawer.Screen name="Emergency" component={Emergency}  options={{ title: 'Emergency Report' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Feedback" component={Feedback}  options={{ title: 'Feedback' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="ClaimForm" component={ClaimForm}  options={{ title: 'ClaimForm' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Drawer.Screen name="ClaimDetail" component={ClaimDetail}  options={{ title: 'ClaimDetail' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Stack.Screen name="ClaimDetail" component={ClaimDetail}  options={{ title: 'ClaimDetail' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Agentview" component={Agentview}  options={{ title: 'Agent login' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Practice" component={Practice}  options={{ title: 'Scrolling' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Drawer.Screen name="ClaimPage" component={ClaimPage}  options={{ title: 'ClaimPage' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Stack.Screen name="ClaimPage" component={ClaimPage}  options={{ title: 'ClaimPage' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Stack.Screen name="E-claim Portal" component={User}  options={{ headerShown: true}}/>
+
+      <Stack.Screen name="ImageBrowser" component={ImageBrowser}  options={{ headerShown: true}}/>
+
     </Drawer.Navigator>
   );
 }
@@ -82,6 +87,7 @@ const App = ({navigation,toggleDrawer}) => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
           headerTransparent:true,
@@ -97,6 +103,7 @@ const App = ({navigation,toggleDrawer}) => {
         }}
         
         >
+        <Stack.Screen name="Splash" component={Splash}  options={{ headerShown: false}}/>
         <Stack.Screen name="MainDrawer" component={MainDrawerNavigation}/>
 
       </Stack.Navigator>
