@@ -8,32 +8,29 @@ const HomeScreen = ({ navigation,route }) => {
   var today = new Date()
   var curHr = today.getHours()
   
-  if(route.params){
-    var { photos } = route.params;
-    console.log(photos)
-  }
+
   
 
 
   // ------------image picker test----------
-  const [image, setImage] = useState(null);
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      allowsMultipleSelection:true,
-      quality: 3,
-      base64:true
-    });
+  // const [image, setImage] = useState(null);
+  // const pickImage = async () => {
+  //   // No permissions request is necessary for launching the image library
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     allowsMultipleSelection:true,
+  //     quality: 3,
+  //     base64:true
+  //   });
 
-    console.log(result);
+  //   console.log(result);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
+  //   if (!result.cancelled) {
+  //     setImage(result.uri);
+  //   }
+  // };
 
 
   return (
@@ -47,13 +44,7 @@ const HomeScreen = ({ navigation,route }) => {
         <Text style={styles.buttontext} >Claim Guide</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('')}
-      >
-        <Text style={styles.buttontext} >Go to List Demo</Text>
-      </TouchableOpacity> */}
-      
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Webview')}
@@ -75,16 +66,6 @@ const HomeScreen = ({ navigation,route }) => {
         <Text style={styles.buttontext} >Emergency Report</Text>
       </TouchableOpacity>
 
-
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-      <Button title="Pick an image from camera roll" onPress={()=>{
-        navigation.navigate('ImageBrowser')
-      }} />
-      
-    </View>
-    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-
-    </View>
     </View>
   );
 };

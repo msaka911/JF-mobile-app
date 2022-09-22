@@ -7,7 +7,7 @@ import { useState } from 'react';
 import {REACT_APP_BACKEND} from '@env'
 import uniqueId from 'lodash/uniqueId'
 
-import Spacer from '../Spacer';
+import Spacer from '../subScreens/Spacer';
 import { Input } from 'react-native-elements';
 import DateTimePicker  from '@react-native-community/datetimepicker';
 import { max } from 'lodash';
@@ -16,7 +16,7 @@ import { max } from 'lodash';
 const Webview=({navigation})=>{
     const [policy_number,setPolicy]=useState("")
 
-    const [date, setDate] = useState(new Date("2018-01-01T00:00:00"))
+    const [date, setDate] = useState(new Date("2000-01-01T00:00:00"))
     const [open, setOpen] = useState(true)
 
     const id = uniqueId('jfinsurancepolicy')
@@ -83,21 +83,45 @@ const Webview=({navigation})=>{
           var formdata = new FormData();
           formdata.append('policy', policy_number.toUpperCase());
           formdata.append('birthday', date.toISOString().split('T')[0]);
-          formdata.append('api_id', id);
-          
+          formdata.append('api_id', id+(Math.random() * 1001).toString());
+          console.log(id+(Math.random() * 1001).toString())
           var requestOptions = {
             method: 'POST',
-            body: formdata,
-            redirect: 'follow'
+            body: formdata          
           };
           
           fetch("https://claim.otcww.com/Api/login", requestOptions)
-            .then(response => response.text())
-            .then(result => navigation.navigate("E-claim Portal",{ data: result,api_id:id}))
-            .catch(error => console.log('error', error));
-        }
+
+           .then(response => {
+            // console.log(response.type)
+            // console.log(response.status)
+
+            // for(const i in response){
+            //   console.log(`${i}: ${response[i]}`)
+            // }
+            // if (response.OK) {
+            //   return response.json()
+            // }
+            //  return Promise.reject(response)
+            return response.json()
+           })
+           .then((data)=>{
+            if(data.status==`OK`){
+              navigation.navigate("E-claim Portal",{ data: data,api_id:id})
+            }
+            else{
+              return Promise.reject(response)
+            }
+           })
+          //  .then((data)=>navigation.navigate("E-claim Portal",{ data: data,api_id:id}))
+          //  .then(()=>console.log("here"))
+
+            .catch(error=> Alert.alert(
+              'Incorrect Policy Information','',[]
+            ))
+          }
         else{
-          Alert.alert(
+          return Alert.alert(
             "Please input valid info",'',[]
           )
         }
@@ -130,7 +154,6 @@ const Webview=({navigation})=>{
             marginTop:25,
             color:'black',
             fontSize:25,
-            textDecorationLine: 'underline',
             width:300
              }
             ,
@@ -166,7 +189,6 @@ const Webview=({navigation})=>{
             width:200,
             height:100,
             alignContent:'center',
-            marginTop:50,
             flexDirection: 'row',
             alignItems:'baseline',}}>
        <FontAwesome

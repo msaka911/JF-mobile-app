@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import {REACT_APP_BACKEND} from '@env'
-import Spacer from '../Spacer';
+import Spacer from './subScreens/Spacer';
 import { Input } from 'react-native-elements';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';

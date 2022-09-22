@@ -4,7 +4,7 @@ import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-na
 import { useState } from 'react';
 import {REACT_APP_BACKEND} from '@env'
 
-import Spacer from '../Spacer';
+import Spacer from './subScreens/Spacer';
 import { Input } from 'react-native-elements';
 import * as WebBrowser from 'expo-web-browser';
 import * as SecureStore from 'expo-secure-store';

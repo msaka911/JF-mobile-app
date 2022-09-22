@@ -3,7 +3,7 @@ import { View, Text, StyleSheet,TextInput ,Alert } from 'react-native';
 
 import {REACT_APP_BACKEND} from '@env'
 import { Input } from 'react-native-elements';
-import Spacer from './Spacer';
+import Spacer from './screens/subScreens/Spacer';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

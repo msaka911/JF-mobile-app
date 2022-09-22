@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import ContactUs from './src/screens/ContactUs';
 import AboutUs from './src/screens/AboutUs';
-import Webview from './src/screens/WebView';
+import Webview from './src/screens/Eclaim/WebView';
 import Policy from './src/screens/Policy';
 import ClaimGuide from './src/screens/ClaimGuide';
 import Emergency from './src/screens/Emergency';
@@ -15,10 +15,11 @@ import Splash from './src/screens/Splash';
 import ClaimForm from './src/screens/ClaimForm';
 import ClaimDetail from './src/ClaimDetail';
 import Agentview from './src/screens/Agent';
-import Practice from './src/screens/Practice';
-import ClaimPage from './src/screens/ClaimPage'
-import ImageBrowser from './src/screens/ImageUpload';
-import User from './src/screens/User';
+import ClaimPage from './src/screens/Eclaim/ClaimPage'
+import ImageBrowser from './src/screens/Eclaim/ImageUpload';
+import User from './src/screens/Eclaim/User';
+import EclaimSubmit from'./src/screens/Eclaim/EclaimSubmit'
+
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -29,7 +30,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import {DrawerActions} from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons'; 
 
-import { TouchableOpacity } from 'react-native';
 
 
 
@@ -71,9 +71,9 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="ClaimForm" component={ClaimForm}  options={{ title: 'ClaimForm' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="ClaimDetail" component={ClaimDetail}  options={{ title: 'ClaimDetail' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Drawer.Screen name="Agentview" component={Agentview}  options={{ title: 'Agent login' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Drawer.Screen name="Practice" component={Practice}  options={{ title: 'Scrolling' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="ClaimPage" component={ClaimPage}  options={{ title: 'ClaimPage' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Stack.Screen name="E-claim Portal" component={User}  options={{ headerShown: true}}/>
+      <Stack.Screen name="E-claim Portal" component={User}  options={{ title: 'E-claim Portal' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Stack.Screen name="new E-claim" component={EclaimSubmit}  options={{ title: 'new E-claim' , headerStyle:{backgroundColor:'#006400'}}}/>
 
       <Stack.Screen name="ImageBrowser" component={ImageBrowser}  options={{ headerShown: true}}/>
 

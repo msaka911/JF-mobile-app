@@ -12,9 +12,9 @@ export default class ImageBrowserScreen extends Component {
 
   imagesCallback = (callback) => {
     const { navigation } = this.props;
-    this.props.navigation.setOptions({
-      headerRight: () => this._getHeaderLoader()
-    });
+    // this.props.navigation.setOptions({
+    //   headerRight: () => this._getHeaderLoader()
+    // });
 
     callback.then(async (photos) => {
       const cPhotos = [];
@@ -27,7 +27,7 @@ export default class ImageBrowserScreen extends Component {
           name: photo.filename
         })
       }
-      navigation.navigate('HomeScreen', {photos: cPhotos});
+      navigation.navigate("new E-claim", {photos: cPhotos});
     })
     .catch((e) => console.log(e));
   };
@@ -42,7 +42,7 @@ export default class ImageBrowserScreen extends Component {
   };
 
   _renderDoneButton = (count, onSubmit) => {
-    if (!count) return null;
+   
     return <TouchableOpacity title={'Done'} onPress={onSubmit} style={{marginRight:10}}>
       <Text style={{fontSize:20, fontWeight:'bold'}} onPress={onSubmit}>Done</Text>
     </TouchableOpacity>

@@ -1,7 +1,7 @@
 import React,{useEffect, useState,useRef} from 'react';
 import { Text, StyleSheet, View ,FlatList, TouchableOpacity,Alert,Animated} from 'react-native';
 import {REACT_APP_BACKEND} from '@env'
-import Spacer from './Spacer';
+import Spacer from './screens/subScreens/Spacer';
 
 
 

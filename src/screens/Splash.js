@@ -4,7 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import logo from '../../assets/logo.png';
 import { AntDesign } from '@expo/vector-icons'; 
-import Spacer from '../Spacer';
+import Spacer from './subScreens/Spacer';
 import splashimage from '../../assets/splash.png'
 
 export default function Splash({navigation},props) {
