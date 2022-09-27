@@ -32,7 +32,6 @@ const HomeScreen = ({ navigation,route }) => {
   //   }
   // };
 
-
   return (
     <View >
       <Image source={logo} style={styles.logo}/>

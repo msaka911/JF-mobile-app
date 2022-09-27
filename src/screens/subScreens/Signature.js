@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import Signature from "react-native-signature-canvas";
 
-export const SignatureScreen = () => {
-  const [signature, setSign] = useState(null);
+export const SignatureScreen = (props) => {
+  const {signature, setSign} = props
+  
 
   const handleOK = (signature) => {
-    console.log(signature);
     setSign(signature);
   };
 

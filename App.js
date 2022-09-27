@@ -73,8 +73,7 @@ function MainDrawerNavigation({navigation }) {
       <Drawer.Screen name="Agentview" component={Agentview}  options={{ title: 'Agent login' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="ClaimPage" component={ClaimPage}  options={{ title: 'ClaimPage' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="E-claim Portal" component={User}  options={{ title: 'E-claim Portal' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Stack.Screen name="new E-claim" component={EclaimSubmit}  options={{ title: 'new E-claim' , headerStyle:{backgroundColor:'#006400'}}}/>
-
+      <Stack.Screen name="new E-claim" component={EclaimSubmit}  options={{ title: 'new E-claim' , headerStyle:{backgroundColor:'#006400'},headerRight:()=>null}}/>
       <Stack.Screen name="ImageBrowser" component={ImageBrowser}  options={{ headerShown: true}}/>
 
     </Drawer.Navigator>

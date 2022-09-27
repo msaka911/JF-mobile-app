@@ -22,9 +22,11 @@ export default class ImageBrowserScreen extends Component {
         const pPhoto = await this._processImageAsync(photo.uri);
         // const converted= await FileSystem.readAsStringAsync(pPhoto.uri, { encoding: FileSystem.EncodingType.Base64 })
         // const buffer = Buffer.from(converted, 'base64')
+   
         cPhotos.push({
-          uri:  pPhoto.uri,
-          name: photo.filename
+          uri:  photo.uri,
+          name: photo.filename,
+          type: 'image/PNG'
         })
       }
       navigation.navigate("new E-claim", {photos: cPhotos});

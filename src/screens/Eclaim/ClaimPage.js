@@ -13,20 +13,30 @@ const ClaimPage=({route,navigation})=>{
     
     const[claimData, setData]=useState();
     
+    async function extract(key, value) {
+      await SecureStore.getItemAsync(key, value);
+    }
 
-    const { data } = route.params;
-    const {api_id}=route.params;
-    
+   
     const [modalVisible, setModalVisible] = useState(true);
 
-    useEffect(()=>{
-        
-        var parsed=data
-        if(parsed!==undefined){
+    useEffect(async()=>{
+      async function getApi(){
+          var api=await extract('api_id')
+              return api
+          }
+      const api_id=await getApi()
+      var getToken =async()=>{
+          var extractToken=await extract('token')
+              return extractToken
+        }
+      
+      const token=await getToken()   
+        if(typeof token!==`undefined`&&typeof api_id!==`undefined`){
 
             var formdata = new FormData();
             formdata.append('api_id', api_id);
-            formdata.append('token', parsed.token);
+            formdata.append('token', token);
         
             var requestOptions = {
                 method: 'POST',
@@ -46,7 +56,7 @@ const ClaimPage=({route,navigation})=>{
                 Alert.alert("cannot retrieve the information, try again later","",[])
         }
 
-    },[route.params])
+    },[])
     //---------------------fetch claim information--------------------------
 
     ///-------------------------animation--------------------

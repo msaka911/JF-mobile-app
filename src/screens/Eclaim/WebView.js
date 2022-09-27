@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
 
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity,Alert, Pressable,Keyboard } from 'react-native';
 import { useState } from 'react';
@@ -72,7 +73,9 @@ const Webview=({navigation})=>{
     //   }
     // },[input2])
     
-    
+    async function save(key, value) {
+      await SecureStore.setItemAsync(key, value);
+    }
 
     
 
@@ -81,33 +84,57 @@ const Webview=({navigation})=>{
 
         if(policy_number.length>6&&date.toString().length>35){
           var formdata = new FormData();
+          var combinedID= id+(Math.random() * 1001).toString()
           formdata.append('policy', policy_number.toUpperCase());
           formdata.append('birthday', date.toISOString().split('T')[0]);
-          formdata.append('api_id', id+(Math.random() * 1001).toString());
-          console.log(id+(Math.random() * 1001).toString())
+          formdata.append('api_id',combinedID);
+
+          
           var requestOptions = {
             method: 'POST',
-            body: formdata          
+            body: formdata,
+            withCredentials:false          
           };
           
-          fetch("https://claim.otcww.com/Api/login", requestOptions)
+          fetch("https://claim.mmoo.ca/Api/login", requestOptions)
+
+//---------------------url="https://claim.otcww.com/Api/login"----------------------------------------
+
 
            .then(response => {
+            
+
+            // for(let entry of response.headers.entries()) {
+            //   if(typeof entry.set-cookie!==`undefined`){
+            //         // save('Cookie',entry.set-cookie)
+            //         console.log(entry.set-cookie)
+            //   }
+            //   else{
+            //     console.log('cannot set up cookie')
+            //   }
+            // }
+            for(let entry of response.headers.entries()) {
+              // if(entry[1].includes('jf_claim')){
+              //   console.log(entry['set-cookie']);
+              //   console.log(entry[1])
+              // }
+              // console.log(entry[0]);
+              // console.log(entry[1])
+              // console.log(entry.cookie)
+              // console.log( entry[1])
+
+            }
             // console.log(response.type)
             // console.log(response.status)
 
-            // for(const i in response){
-            //   console.log(`${i}: ${response[i]}`)
-            // }
-            // if (response.OK) {
-            //   return response.json()
-            // }
-            //  return Promise.reject(response)
+
+ 
             return response.json()
            })
            .then((data)=>{
             if(data.status==`OK`){
-              navigation.navigate("E-claim Portal",{ data: data,api_id:id})
+
+              navigation.navigate("E-claim Portal",{ data: data,api_id:combinedID})
             }
             else{
               return Promise.reject(response)
@@ -116,9 +143,13 @@ const Webview=({navigation})=>{
           //  .then((data)=>navigation.navigate("E-claim Portal",{ data: data,api_id:id}))
           //  .then(()=>console.log("here"))
 
-            .catch(error=> Alert.alert(
+            .catch(error=>{  
+              Alert.alert(
               'Incorrect Policy Information','',[]
-            ))
+            )
+              console.log(error)
+          }
+            )
           }
         else{
           return Alert.alert(

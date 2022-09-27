@@ -7,7 +7,7 @@ const InputField=(props)=>{
  return(
     <View style={{
         marginLeft:5,
-        height: 65,
+        height: 80,
         flexDirection:'row',
         alignItems:'center',
         justifyContent:"space-between"
