@@ -77,7 +77,7 @@ export default function ImagePickerExample({image,setID,fileID,setImage}) {
         style={{alignItems: 'center',justifyContent: 'center',marginTop:200}} 
         onPress={()=>pickImage(image,fileID)}> 
 
-                <Text style={{fontSize:25,fontWeight:'bold'}}>{image.length>1?'More Images':`Choose Images`}</Text>
+                <Text style={{fontSize:25,fontWeight:'bold'}}>{image.length>0?'More Images':`Choose Images`}</Text>
         </TouchableOpacity>
       <ScrollView horizontal={true} style={{flex: 1,flexDirection:'row',marginTop:30}}>
       {image && 

@@ -45,6 +45,7 @@ const EclaimSubmit=({ navigation,route })=>{
     const [signature, setSign] = useState(null);
     const [email, setE] = useState(null);
     const [postal_code, setPostal] = useState(null);
+    const [payees_cheque, toggleCheque] = useState(false);
 
     const [fileID, setID] = useState([]);
     const [signID, setsignID] = useState();
@@ -123,6 +124,10 @@ const EclaimSubmit=({ navigation,route })=>{
        //---------url=https://claim.otcww.com/Api/imagepng------------------------------------------------------------
        if(typeof returnedID!==`undefined`&&returnedID){
           setsignID(returnedID)
+          return returnedID
+       }
+       else{
+        return null
        }
     }
 
@@ -409,7 +414,7 @@ const EclaimSubmit=({ navigation,route })=>{
           
           <InputField style={{width:180}} content="Guardian Contact" setValue={setGuardianContact}/>
 
-
+          
             
         </View>  
        :null}
@@ -450,12 +455,28 @@ const EclaimSubmit=({ navigation,route })=>{
               
               :
               
-              <View>
-                 <InputField style={{width:180}} content="Payee Name" setValue={setName}/>
-                 <InputField style={{width:180}} content="Address" setValue={setAddress}/>
-                 <InputField style={{width:180}} content="City" setValue={setCity}/>
-                 <InputField style={{width:180}} content="Province" setValue={setProvince}/>
-                 <InputField style={{width:180}} content="Postal Code" setValue={setPostcode}/>
+              <View  style={{width:330}}>
+                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'baseline',marginTop:20}}>
+                  <Text style={{fontSize:20,fontWeight:'bold',alignItems:"center"}}>
+                    same as contact?
+                  </Text>
+                  <Switch  style={{marginBottom:5}} value={payees_cheque} onValueChange={()=>toggleCheque(!payees_cheque)} />
+                </View>
+                  {payees_cheque?
+                  <View style={{alignContent:'space-between',marginTop:20}}>
+                    <Text style={{fontSize:20,fontWeight:'bold'}}>Payee Name:  {contactfirstname} {contactlastname}</Text>
+                    <Text style={{fontSize:20,fontWeight:'bold'}}>Payee Address:   {street_address} {city} {province}</Text>
+                  </View>
+                  :
+                   <View>
+                    <InputField style={{width:180}} content="Payee Name" setValue={setName}/>
+                    <InputField style={{width:180}} content="Address" setValue={setAddress}/>
+                    <InputField style={{width:180}} content="City" setValue={setCity}/>
+                    <InputField style={{width:180}} content="Province" setValue={setProvince}/>
+                    <InputField style={{width:180}} content="Postal Code" setValue={setPostcode}/>
+                  </View>
+                  }
+                 
               </View>
           }
           </View>:null
@@ -529,18 +550,38 @@ const EclaimSubmit=({ navigation,route })=>{
     />
         </View>
        :null}
+       <View style={{flexDirection:'row',justifyContent:'space-between',width:350, alignSelf:'center'}}>
+      <TouchableOpacity 
+        style={{}}
+        onPress={()=>{
+          if(nextPage!=1){
+            setPage(nextPage-1)
+          }
+        }}> 
+        <Text style={{fontSize:30,fontWeight:'bold' }} >{nextPage!=1?`Previous`:``}</Text>
+
+        </TouchableOpacity>
+
 
       <TouchableOpacity 
-        style={{alignItems: 'center'}}
+        style={{}}
         onPress={async()=>{
           if(nextPage==5){
-            await signSubmit()
-            setPage(nextPage+1)
+            var verified=await signSubmit()
+            if (typeof verified!="undefined"){
+                 setPage(nextPage+1)
+            }
+//--------------------------------------------------------------------------------bug------
           }
           else if(nextPage==6){
-             await onSubmit()
-             setPage(1)
-             navigation.navigate('E-claim Portal')      
+             if(checked&&checked1&&checked2){
+              await onSubmit()
+              setPage(1)
+              navigation.navigate('E-claim Portal')   
+             }
+             else{
+              Alert.alert("Please tick all the fields")
+             }  
           }
           else if(nextPage==4){
             // await imageSubmit()
@@ -553,7 +594,7 @@ const EclaimSubmit=({ navigation,route })=>{
         <Text style={{fontSize:30,fontWeight:'bold'}}>{nextPage==6?`Submit`:`Next`}</Text>
 
         </TouchableOpacity>
-
+        </View>
         <ProgressBar style={{alignItems: 'center',height:20,marginTop:50}} progress={Math.floor(nextPage/6*100)/100}></ProgressBar>
 
       </View>
