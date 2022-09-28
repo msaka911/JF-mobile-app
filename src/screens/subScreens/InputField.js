@@ -17,7 +17,7 @@ const InputField=(props)=>{
         fontWeight:'bold',
         
     }}>{props.content}</Text>
-    <TextInput style={[styles.input, props.style]} onChangeText={(value)=>props.setValue(value)}></TextInput>
+    <TextInput style={[styles.input, props.style]}  onChangeText={(value)=>props.setValue(value)}></TextInput>
     </View>
  )
 }

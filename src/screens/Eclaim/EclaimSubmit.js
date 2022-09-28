@@ -62,7 +62,6 @@ const EclaimSubmit=({ navigation,route })=>{
         let effective = await SecureStore.getItemAsync('effective_date')
         let insuredname1 = await SecureStore.getItemAsync('firstname')
         let insuredname2 = await SecureStore.getItemAsync('lastname')
-
         setInfo([policyShowing,effective,`${insuredname1}  ${insuredname2}`])
       }
   
@@ -172,20 +171,20 @@ const EclaimSubmit=({ navigation,route })=>{
       let lastname= await SecureStore.getItemAsync('lastname');
       let insure_email=await SecureStore.getItemAsync('email');
       let contact=await SecureStore.getItemAsync('phone');
-      
-      formdata.append('imgfile',fileID.toString());
+
+      formdata.append('imgfile',fileID);
       formdata.append('sign_name',lastname);
       formdata.append('sign_image',signID.toString());
       formdata.append('api_id',api_id);
       formdata.append('token',token);
-      // formdata.append('id','0');
+      formdata.append('id','0');
       // formdata.append('physician_name',null);
       // formdata.append('clinic_name',null);
       // formdata.append('physician_street_address',null);
       // formdata.append('physician_suite_number',null);
       // formdata.append('physician_city',null);
       // formdata.append('physician_country',null);
-      // formdata.append('country',`CA`);
+      formdata.append('country',`CA`);
       // formdata.append('physician_post_code',null);
       // formdata.append('physician_telephone',null);
       // formdata.append('physician_alt_telephone',null);
@@ -226,7 +225,6 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('gender',gender);
       formdata.append('policy_no',policy);
       // formdata.append('product_short',product_short);
-      // formdata.append('arrival_date',arrival_date);
 
       formdata.append('guardian_name',guardian_name);
       formdata.append('guardian_phone',guardian_contact);
@@ -236,7 +234,7 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('telephone',contact);
       formdata.append('email',insure_email);
       formdata.append('postal_code',postal_code);
-      // formdata.append('arrival_date_canada',arrival_date);
+      formdata.append('arrival_date_canada',arrival_date);
       
       formdata.append('contact_first_name',contactfirstname);
       formdata.append('contact_last_name',contactlastname);
@@ -267,76 +265,76 @@ const EclaimSubmit=({ navigation,route })=>{
 
 
 
-      // formdata.append('exinfo_depature_date',null);
-      // formdata.append('exinfo_return_date',null);
-      // formdata.append('exinfo_destination',null);
-      // formdata.append('exinfo_spouse_insurance','N');
-      // formdata.append('exinfo_other_medical_insurance','N');
-      // formdata.append('exinfo_credit_card_insurance','N');
-      // formdata.append('exinfo_group_insurance','N');
-      // formdata.append('exinfo_other_insurance_name',null);
-      // formdata.append('exinfo_other_insurance_policy',null);
-      // formdata.append('exinfo_other_insurance_number',null);
-      // formdata.append('exinfo_other_insurance_phone',null);
-      // formdata.append('exinfo_spouse_insurance_name',null);
-      // formdata.append('exinfo_spouse_insurance_policy',null);
-      // formdata.append('exinfo_spouse_insurance_number',null);
-      // formdata.append('exinfo_spouse_insurance_phone',null);
-      // formdata.append('exinfo_spouse_name',null);
-      // formdata.append('exinfo_spouse_dob',null);
-      // formdata.append('exinfo_credit_card_insurance_name',null);
-      // formdata.append('exinfo_credit_card_number',null);
-      // formdata.append('exinfo_credit_card_expire',null);
-      // formdata.append('exinfo_credit_card_holder',null);
-      // formdata.append('exinfo_group_insurance_company',null);
-      // formdata.append('exinfo_group_insurance_policy',null);
-      // formdata.append('exinfo_group_insurance_member',null);
-      // formdata.append('exinfo_group_insurance_phone',null);
-      // formdata.append('exinfo_other_travel_insurance_explanation',null);
-      // formdata.append('exinfo_loss_type',null);
-      // formdata.append('exinfo_loss_describe',null);
-      // formdata.append('exinfo_loss_date',null);
-      // formdata.append('exinfo_loss_report_to',null);
-      // formdata.append('expenses_claimed_service_description',null);
-      // formdata.append('expenses_claimed_provider_name',null);
-      // formdata.append('expenses_claimed_referencing_physician',null);
-      // formdata.append('expenses_claimed_date_of_service',null);
-      // formdata.append('expenses_claimed_amount_client_paid_org',null);
-      // formdata.append('expenses_claimed_amount_claimed_org',null);
-      // formdata.append('expenses_claimed_amount_billed_org',null);
-      // formdata.append('expenses_claimed_currency',null);
-      // formdata.append('expenses_claimed_other_reimbursed_amount',null);
-      // formdata.append('exinfo_cancelled_date',null);
-      // formdata.append('exinfo_loss_reason',null);
-      // formdata.append('exinfo_sickness',null);
-      // formdata.append('exinfo_injury1_date',null);
-      // formdata.append('exinfo_physician_date',null);
-      // formdata.append('exinfo_injury_details',null);
-      // formdata.append('exinfo_injury_date',null);
-      // formdata.append('exinfo_patient_name',null);
-      // formdata.append('exinfo_death_date',null);
-      // formdata.append('exinfo_relation',null);
-      // formdata.append('exinfo_death_describe',null);
-      // formdata.append('exinfo_circumstances',null);
-      // formdata.append('exinfo_occured_date',null);
-      // formdata.append('exinfo_other_reason',null);
-      // formdata.append('exinfo_other_occurred_date',null);
-      // formdata.append('exinfo_cancel_reason',null);
+      formdata.append('exinfo_depature_date',null);
+      formdata.append('exinfo_return_date',null);
+      formdata.append('exinfo_destination',null);
+      formdata.append('exinfo_spouse_insurance','N');
+      formdata.append('exinfo_other_medical_insurance','N');
+      formdata.append('exinfo_credit_card_insurance','N');
+      formdata.append('exinfo_group_insurance','N');
+      formdata.append('exinfo_other_insurance_name',null);
+      formdata.append('exinfo_other_insurance_policy',null);
+      formdata.append('exinfo_other_insurance_number',null);
+      formdata.append('exinfo_other_insurance_phone',null);
+      formdata.append('exinfo_spouse_insurance_name',null);
+      formdata.append('exinfo_spouse_insurance_policy',null);
+      formdata.append('exinfo_spouse_insurance_number',null);
+      formdata.append('exinfo_spouse_insurance_phone',null);
+      formdata.append('exinfo_spouse_name',null);
+      formdata.append('exinfo_spouse_dob',null);
+      formdata.append('exinfo_credit_card_insurance_name',null);
+      formdata.append('exinfo_credit_card_number',null);
+      formdata.append('exinfo_credit_card_expire',null);
+      formdata.append('exinfo_credit_card_holder',null);
+      formdata.append('exinfo_group_insurance_company',null);
+      formdata.append('exinfo_group_insurance_policy',null);
+      formdata.append('exinfo_group_insurance_member',null);
+      formdata.append('exinfo_group_insurance_phone',null);
+      formdata.append('exinfo_other_travel_insurance_explanation',null);
+      formdata.append('exinfo_loss_type',null);
+      formdata.append('exinfo_loss_describe',null);
+      formdata.append('exinfo_loss_date',null);
+      formdata.append('exinfo_loss_report_to',null);
+      formdata.append('expenses_claimed_service_description',null);
+      formdata.append('expenses_claimed_provider_name',null);
+      formdata.append('expenses_claimed_referencing_physician',null);
+      formdata.append('expenses_claimed_date_of_service',null);
+      formdata.append('expenses_claimed_amount_client_paid_org',null);
+      formdata.append('expenses_claimed_amount_claimed_org',null);
+      formdata.append('expenses_claimed_amount_billed_org',null);
+      formdata.append('expenses_claimed_currency',null);
+      formdata.append('expenses_claimed_other_reimbursed_amount',null);
+      formdata.append('exinfo_cancelled_date',null);
+      formdata.append('exinfo_loss_reason',null);
+      formdata.append('exinfo_sickness',null);
+      formdata.append('exinfo_injury1_date',null);
+      formdata.append('exinfo_physician_date',null);
+      formdata.append('exinfo_injury_details',null);
+      formdata.append('exinfo_injury_date',null);
+      formdata.append('exinfo_patient_name',null);
+      formdata.append('exinfo_death_date',null);
+      formdata.append('exinfo_relation',null);
+      formdata.append('exinfo_death_describe',null);
+      formdata.append('exinfo_circumstances',null);
+      formdata.append('exinfo_occured_date',null);
+      formdata.append('exinfo_other_reason',null);
+      formdata.append('exinfo_other_occurred_date',null);
+      formdata.append('exinfo_cancel_reason',null);
       formdata.append('exinfo_other_party_reimbursed_refunded','N');
       formdata.append('date_symptoms_input',(new Date(date_symptoms)).toUTCString());
-      // formdata.append('date_first_physician_input',(new Date(date_first_physician)).toUTCString());
-      // formdata.append('exinfo_depature_date_input',null);
-      // formdata.append('exinfo_return_date_input',null);
-      // formdata.append('exinfo_cancelled_date_input',null);
-      // formdata.append('exinfo_injury1_date_input',null);
-      // formdata.append('exinfo_physician_date_input',null);
-      // formdata.append('exinfo_injury_date_input',null);
-      // formdata.append('exinfo_death_date_input',null);
-      // formdata.append('exinfo_other_occurred_date_input',null);
-      // formdata.append('expenses_claimed_date_of_service_input',null);
-      // formdata.append('arrival_date_canada_input',(new Date(arrival_date)).toUTCString());
-      // formdata.append('exinfo_loss_date_input',null);
-      // formdata.append('exinfo_spouse_dob_input',null);
+      formdata.append('date_first_physician_input',(new Date(date_first_physician)).toUTCString());
+      formdata.append('exinfo_depature_date_input',null);
+      formdata.append('exinfo_return_date_input',null);
+      formdata.append('exinfo_cancelled_date_input',null);
+      formdata.append('exinfo_injury1_date_input',null);
+      formdata.append('exinfo_physician_date_input',null);
+      formdata.append('exinfo_injury_date_input',null);
+      formdata.append('exinfo_death_date_input',null);
+      formdata.append('exinfo_other_occurred_date_input',null);
+      formdata.append('expenses_claimed_date_of_service_input',null);
+      formdata.append('arrival_date_canada_input',(new Date(arrival_date)).toUTCString());
+      formdata.append('exinfo_loss_date_input',null);
+      formdata.append('exinfo_spouse_dob_input',null);
       formdata.append('amount',amount);
       formdata.append('sameAddress',`true`);
       formdata.append('sameEmail',`true`);
@@ -357,22 +355,27 @@ const EclaimSubmit=({ navigation,route })=>{
        return response.json()
       })
       .then((data)=>{
+      //------------------------------------------------------------
        if(data.status==`OK`){
                 Alert.alert(`Your E-claim has successfully submited, reference ${data.application_id}`)
                 return data.application_id
       }
        else{
-         return Promise.reject(response)
+         return Promise.reject(data)
        }
       })
        .catch(error=>
         { 
+          console.log(error)
           Alert.alert(
           'Submission Failed, check your internet','',[]
         )
         return null
       }
        )
+
+      setImage([])
+      setSign(``)
    }
    
   
