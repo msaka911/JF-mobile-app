@@ -1,62 +1,77 @@
 import * as React from 'react';
-import { Text, StyleSheet, View, Modal, TouchableOpacity,LayoutAnimation,Animated,useWindowDimensions,ScrollView, Alert,Pressable } from 'react-native';
-import { useState, useEffect,useRef} from 'react';
+import { Text, StyleSheet, View, Modal, RefreshControl,LayoutAnimation,Animated,useWindowDimensions,ScrollView, Alert,Pressable } from 'react-native';
+import { useState, useEffect} from 'react';
 import {REACT_APP_BACKEND} from '@env'
 import { CustomLayoutSpring } from "react-native-animation-layout";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import ClaimItem from '../subScreens/ClaimItem';
 import Spacer from '../subScreens/Spacer';
-import { Input } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 
 const ClaimPage=({route,navigation})=>{
     
     const[claimData, setData]=useState();
-    
-    async function extract(key, value) {
-      await SecureStore.getItemAsync(key, value);
-    }
+    const [refreshing, setRefreshing]=useState(false)
+
+
+
+    const onRefresh=React.useCallback(()=>{
+      setRefreshing(true);
+    }, []);
 
    
     const [modalVisible, setModalVisible] = useState(true);
 
-    useEffect(async()=>{
-      async function getApi(){
-          var api=await extract('api_id')
-              return api
-          }
-      const api_id=await getApi()
-      var getToken =async()=>{
-          var extractToken=await extract('token')
-              return extractToken
-        }
-      
-      const token=await getToken()   
-        if(typeof token!==`undefined`&&typeof api_id!==`undefined`){
 
-            var formdata = new FormData();
-            formdata.append('api_id', api_id);
-            formdata.append('token', token);
+async function retrieve(){
+  async function extract(key) {
+    return await SecureStore.getItemAsync(key);
+  }
+
+
+    var api_id=await extract('api_id')    
+    var token=await extract('token')
+
+    if(typeof token!==`undefined`&&typeof api_id!==`undefined`){
+
+        var formdata = new FormData();
+        formdata.append('api_id', api_id);
+        formdata.append('token', token);
+    
+        var requestOptions = {
+            method: 'POST',
+            body: formdata};
         
-            var requestOptions = {
-                method: 'POST',
-                body: formdata,
-                redirect: 'follow'
-            };
-            
-            fetch("https://claim.otcww.com/Api/claims", requestOptions)
-                .then(response => response.text())
-                .then((result) => {
-                    setData(JSON.parse(result))
-                    LayoutAnimation.configureNext(CustomLayoutSpring());
-                })
-                .catch(error => Alert.alert('Cannot retrieve the info, please try again later'));
-        }
-        else{
-                Alert.alert("cannot retrieve the information, try again later","",[])
-        }
+        fetch("https://claim.mmoo.ca/Api/claims", requestOptions)
+            .then(response => response.json())
+            .then((result) => {
+                setData(result)
+                LayoutAnimation.configureNext(CustomLayoutSpring());
+            })
+            .catch(error => {
+              console.log(error)
+              Alert.alert('Cannot retrieve the info, please try again later',"",[]);
+              return null
+            })
+    }
+    else{ 
 
+            Alert.alert("cannot retrieve the information, try again later","",[])
+    }
+   }
+
+
+    useEffect(async()=>{
+        await retrieve()
+      // setRefreshing(false)
     },[])
+
+    useEffect(async()=>{
+      if(refreshing==true){
+        await retrieve()
+        setRefreshing(false)
+      }
+  },[refreshing])
     //---------------------fetch claim information--------------------------
 
     ///-------------------------animation--------------------
@@ -111,7 +126,8 @@ const styles=StyleSheet.create({
     
 
     return(
-        <ScrollView>
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+
             {typeof claimData!==`undefined`&&claimData.claims?claimData.claims.map((item)=>{
             return(
                 <ClaimItem key={item.claim_no} item={item}/>

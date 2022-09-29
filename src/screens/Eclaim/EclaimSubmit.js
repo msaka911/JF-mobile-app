@@ -1,5 +1,5 @@
 import React,{useState,useRef,useEffect} from 'react';
-import { Text, StyleSheet, View, Image,Button, TouchableOpacity, Alert } from 'react-native';
+import { Text, StyleSheet, View, Image,Button, TouchableOpacity, Alert ,Keyboard} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 import { ImageBrowser } from 'expo-image-picker-multiple';
@@ -15,36 +15,39 @@ import ProgressBar from '../subScreens/ProgressBar'
 import {SignatureScreen} from '../subScreens/Signature'
 import { Switch } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 const EclaimSubmit=({ navigation,route })=>{
+    
     const [image, setImage] = useState([]);
 
     const [nextPage,setPage]=useState(1)
-    const [contactfirstname,setFirstName]=useState('')
-    const [contactlastname,setLastName]=useState('')
+    const [contactfirstname,setFirstName]=useState()
+    const [contactlastname,setLastName]=useState()
 
-    const [street_address,setStreet]=useState('')
-    const [city,setC]=useState('')
-    const [province,setP]=useState('')
+    const [street_address,setStreet]=useState()
+    const [city,setC]=useState()
+    const [province,setP]=useState()
 
     const [diagnosis,setDx]=useState('')
-    const [date_symptoms,setDate]=useState('')
+    const [date_symptoms,setDate]=useState(new Date("2000-01-01T00:00:00"))
     const [payees_payment_type,setMethod]=useState(false)
     const [payee_email,setEmail]=useState('')
-    const [payees_payee_name,setName]=useState('')
-    const [payees_address,setAddress]=useState('')
-    const [payees_city,setCity]=useState('')
-    const [payees_province,setProvince]=useState('')
-    const [payees_postcode,setPostcode]=useState('')
-    const [date_first_physician,setPhysician]=useState('')
-    const [guardian_name,setGuardian]=useState('')
+    const [payees_payee_name,setName]=useState()
+    const [payees_address,setAddress]=useState()
+    const [payees_city,setCity]=useState()
+    const [payees_province,setProvince]=useState()
+    const [payees_postcode,setPostcode]=useState()
+    const [date_first_physician,setPhysician]=useState(new Date("2000-01-01T00:00:00"))
+    const [guardian_name,setGuardian]=useState()
     const [amount,setAmount]=useState(0)
     const [contact_phone,setContact]=useState('')
     const [guardian_contact,setGuardianContact]=useState('')
     const [treatment_before,setTreatment]=useState(false)
     const [signature, setSign] = useState(null);
     const [email, setE] = useState(null);
-    const [postal_code, setPostal] = useState(null);
+    const [postal_code, setPostal] = useState();
     const [payees_cheque, toggleCheque] = useState(false);
 
     const [fileID, setID] = useState([]);
@@ -105,19 +108,17 @@ const EclaimSubmit=({ navigation,route })=>{
       }
       })
        .catch(error=>
-        { console.log(error)
+        { 
           Alert.alert(
           'Cannot upload your signature, check your internet','',[]
         )
-        return null
+        return undefined
       }
        )
 
        return returnID
 
     }
-
-
 
     async function signSubmit(){
        var returnedID=await imageUploadRequest("https://claim.mmoo.ca/Api/imagepng",[`data`,signature])
@@ -127,7 +128,7 @@ const EclaimSubmit=({ navigation,route })=>{
           return returnedID
        }
        else{
-        return null
+        return undefined
        }
     }
 
@@ -157,12 +158,14 @@ const EclaimSubmit=({ navigation,route })=>{
 
     // }
 
-    console.log('fileID',fileID)
-    console.log('signID',signID)
+
 
     const onToggleSwitch = () => setMethod(!payees_payment_type);
 
     async function onSubmit(){
+      var converted=`[${fileID}]`
+      var id=`${signID}`
+      var arrivalDate= `${arrival_date}`
       var formdata = new FormData();
       let api_id = await SecureStore.getItemAsync('api_id');
       let token = await SecureStore.getItemAsync('token');
@@ -176,13 +179,13 @@ const EclaimSubmit=({ navigation,route })=>{
       let lastname= await SecureStore.getItemAsync('lastname');
       let insure_email=await SecureStore.getItemAsync('email');
       let contact=await SecureStore.getItemAsync('phone');
-
-      formdata.append('imgfile',fileID);
+     
+      formdata.append('imgfile',converted);
       formdata.append('sign_name',lastname);
-      formdata.append('sign_image',signID.toString());
+      formdata.append('sign_image',id);
       formdata.append('api_id',api_id);
       formdata.append('token',token);
-      formdata.append('id','0');
+      // formdata.append('id','0');
       // formdata.append('physician_name',null);
       // formdata.append('clinic_name',null);
       // formdata.append('physician_street_address',null);
@@ -229,7 +232,7 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('dob', dob);
       formdata.append('gender',gender);
       formdata.append('policy_no',policy);
-      // formdata.append('product_short',product_short);
+      formdata.append('product_short',product_short);
 
       formdata.append('guardian_name',guardian_name);
       formdata.append('guardian_phone',guardian_contact);
@@ -238,55 +241,55 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('province',province);
       formdata.append('telephone',contact);
       formdata.append('email',insure_email);
-      formdata.append('postal_code',postal_code);
-      formdata.append('arrival_date_canada',arrival_date);
+      formdata.append('post_code',postal_code);
+      formdata.append('arrival_date_canada',arrivalDate);
       
       formdata.append('contact_first_name',contactfirstname);
       formdata.append('contact_last_name',contactlastname);
       formdata.append('contact_email',email);
       formdata.append('contact_phone',contact_phone);
 
-      formdata.append('status','0');
+      // formdata.append('status','0');
       formdata.append('treatment_before',treatment_before?`T`:'N');
       formdata.append('travel_insurance_coverage_guardians','N');
       formdata.append('other_insurance_coverage','N');
       formdata.append('exinfo_other_party','N');
       formdata.append('medical_description',diagnosis);
-      formdata.append('date_symptoms',date_symptoms);
-      formdata.append('date_first_physician',date_first_physician);
+      formdata.append('date_symptoms',  date_symptoms.toISOString().split('T')[0]);
+      formdata.append('date_first_physician',date_first_physician.toISOString().split('T')[0]);
 
 
 //----------------------------------need to fill after----------------
 
       formdata.append('payees_payment_type',payees_payment_type? `email`:`cheque`);//--------------------------------------------------------------check----
 
-      formdata.append('payees_payee_name',payees_payee_name);
-      formdata.append('payees_address',payees_address);
-      formdata.append('payees_city',payees_city);
-      formdata.append('payees_province',payees_province);
+      formdata.append('payees_payee_name',payees_payee_name||contactfirstname+" "+contactlastname);
+      formdata.append('payees_address',payees_address||street_address);
+      formdata.append('payees_city',payees_city||city);
+      formdata.append('payees_province',payees_province||province);
       formdata.append('payees_country','Canada');
-      formdata.append('payees_postcode',payees_postcode);
+      formdata.append('payees_postcode',payees_postcode||postal_code);
       formdata.append('payees_email',payee_email);
 
 
 
-      formdata.append('exinfo_depature_date',null);
-      formdata.append('exinfo_return_date',null);
-      formdata.append('exinfo_destination',null);
+      // formdata.append('exinfo_depature_date',null);
+      // formdata.append('exinfo_return_date',null);
+      // formdata.append('exinfo_destination',null);
       formdata.append('exinfo_spouse_insurance','N');
       formdata.append('exinfo_other_medical_insurance','N');
       formdata.append('exinfo_credit_card_insurance','N');
       formdata.append('exinfo_group_insurance','N');
-      formdata.append('exinfo_other_insurance_name',null);
-      formdata.append('exinfo_other_insurance_policy',null);
-      formdata.append('exinfo_other_insurance_number',null);
-      formdata.append('exinfo_other_insurance_phone',null);
-      formdata.append('exinfo_spouse_insurance_name',null);
-      formdata.append('exinfo_spouse_insurance_policy',null);
-      formdata.append('exinfo_spouse_insurance_number',null);
-      formdata.append('exinfo_spouse_insurance_phone',null);
-      formdata.append('exinfo_spouse_name',null);
-      formdata.append('exinfo_spouse_dob',null);
+      // formdata.append('exinfo_other_insurance_name',null);
+      // formdata.append('exinfo_other_insurance_policy',null);
+      // formdata.append('exinfo_other_insurance_number',null);
+      // formdata.append('exinfo_other_insurance_phone',null);
+      // formdata.append('exinfo_spouse_insurance_name',null);
+      // formdata.append('exinfo_spouse_insurance_policy',null);
+      // formdata.append('exinfo_spouse_insurance_number',null);
+      // formdata.append('exinfo_spouse_insurance_phone',null);
+      // formdata.append('exinfo_spouse_name',null);
+      // formdata.append('exinfo_spouse_dob',null);
       formdata.append('exinfo_credit_card_insurance_name',null);
       formdata.append('exinfo_credit_card_number',null);
       formdata.append('exinfo_credit_card_expire',null);
@@ -327,7 +330,7 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('exinfo_cancel_reason',null);
       formdata.append('exinfo_other_party_reimbursed_refunded','N');
       formdata.append('date_symptoms_input',(new Date(date_symptoms)).toUTCString());
-      formdata.append('date_first_physician_input',(new Date(date_first_physician)).toUTCString());
+      formdata.append('date_first_physician_input',(new Date(date_first_physician.toISOString().split('T')[0])).toUTCString());
       formdata.append('exinfo_depature_date_input',null);
       formdata.append('exinfo_return_date_input',null);
       formdata.append('exinfo_cancelled_date_input',null);
@@ -341,13 +344,13 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('exinfo_loss_date_input',null);
       formdata.append('exinfo_spouse_dob_input',null);
       formdata.append('amount',amount);
-      formdata.append('sameAddress',`true`);
-      formdata.append('sameEmail',`true`);
+      // formdata.append('sameAddress',`true`);
+      // formdata.append('sameEmail',`true`);
 
       
       var requestOptions = {
         method: 'POST',
-        body: formdata          
+        body: formdata         
       };
 
       console.log(formdata)
@@ -373,16 +376,71 @@ const EclaimSubmit=({ navigation,route })=>{
         { 
           console.log(error)
           Alert.alert(
-          'Submission Failed, check your internet','',[]
+          `Submission Failed, ${error.message}check your internet`,'',[]
         )
-        return null
+        return null 
       }
        )
 
       setImage([])
       setSign(``)
    }
+
+   const onChange = (event, selectedValue) => {
+    const currentDate = selectedValue || new Date();
+    setDate(currentDate);
+    Keyboard.dismiss()
+} 
+
+const onPhysician = (event, selectedValue) => {
+  const getDate = selectedValue || new Date();
+  setPhysician(getDate);
+  Keyboard.dismiss()
+} 
+
    
+const SecondPage=React.useCallback(()=>(
+  <View>
+  {nextPage==2?
+    <View>
+       <InputField style={{width:180}} content="Claim Amount $" setValue={setAmount}/>
+       <InputField style={{width:180}} content="Symptom" setValue={setDx}/>
+       
+       <View style={{flexDirection:'row', alignItems:'center',justifyContent:'center'}}>
+      
+       <Text style={{width:180, fontSize:15, fontWeight:'bold'}}>
+            Symptom Starting Date: 
+       </Text>
+ 
+       <DateTimePicker  mode="date" display='calendar' value={new Date(date_symptoms)} onChange={onChange} style={{width:160,height:100}}/>
+       
+ 
+       </View>
+ 
+       <View style={{alignItems:'center',flex:1,flexDirection:'row',marginTop:15,marginBottom:10}}>
+         <Text style={{fontSize:15,fontWeight:'bold', flex:0.9,alignItems:"center"}}>
+             Sought Treatment Before?            
+         </Text>
+         <Text style={{fontSize:15,fontWeight:'bold'}}> {treatment_before?`Yes`:`No`}</Text>
+         <Switch  style={{margin:10}} value={treatment_before} onValueChange={()=>setTreatment(!treatment_before)} />
+       
+       </View>
+         
+       <View style={{flexDirection:'row', alignItems:'center',justifyContent:'center'}}>
+      
+      <Text style={{width:200, fontSize:15, fontWeight:'bold'}}>
+            Date first visit physician: 
+      </Text>
+ 
+      <DateTimePicker  mode="date" display='calendar' value={new Date(date_first_physician)} onChange={onPhysician} style={{width:150,height:100}}/>
+      </View>
+     </View>  
+    :null}
+    </View>
+)
+
+  
+,[nextPage==2])
   
     return(
       <View style={{flex: 0.95}}>
@@ -419,25 +477,7 @@ const EclaimSubmit=({ navigation,route })=>{
         </View>  
        :null}
          
-         {nextPage==2?
-        <View>
-          <InputField style={{width:180}} content="Claim Amount $" setValue={setAmount}/>
-          <InputField style={{width:180}} content="Symptom" setValue={setDx}/>
-          <InputField style={{width:180}} content="Symptom Startng Date" setValue={setDate}/>
-
-          <View style={{alignItems:'center',flex:1,flexDirection:'row',marginTop:15,marginBottom:10}}>
-            <Text style={{fontSize:15,fontWeight:'bold', flex:0.7,alignItems:"center"}}>
-                Sought Treatment Before?            
-            </Text>
-            <Text style={{fontSize:15,fontWeight:'bold'}}> {treatment_before?`Yes`:`No`}</Text>
-            <Switch  style={{margin:10}} value={treatment_before} onValueChange={()=>setTreatment(!treatment_before)} />
-          
-          </View>
-
-          <InputField style={{width:180}} content="Date first visit physician" setValue={setPhysician}/>
-            
-        </View>  
-       :null}
+         <SecondPage/>
 
 
 
@@ -448,9 +488,11 @@ const EclaimSubmit=({ navigation,route })=>{
             </Text>
             <Switch  style={{margin:10}} value={payees_payment_type} onValueChange={onToggleSwitch} />
             {payees_payment_type?
-            <View>
-              <InputField style={{width:180}} content="Payee Name" setValue={setName}/>
-              <InputField style={{width:180}}  content="Payee Email" setValue={setEmail}/>
+            <View style={{ flexDirection:'row',flexWrap: 'wrap', alignItems:'center', justifyContent:'center'}}>
+              <Text style={{fontSize:20,fontWeight:'bold',alignItems:"center", flexBasis: '40%'}} >Payee Name</Text>
+              <InputField style={{width:200}}  setValue={setName}/>
+              <Text style={{fontSize:20,fontWeight:'bold',alignItems:"center", flexBasis: '40%'}}>Payee Email</Text>
+              <InputField style={{width:200}} setValue={setEmail}/>
             </View>
               
               :
@@ -571,6 +613,9 @@ const EclaimSubmit=({ navigation,route })=>{
             if (typeof verified!="undefined"){
                  setPage(nextPage+1)
             }
+            else{
+              Alert.alert("Please sign your name")
+            }
 //--------------------------------------------------------------------------------bug------
           }
           else if(nextPage==6){
@@ -585,7 +630,13 @@ const EclaimSubmit=({ navigation,route })=>{
           }
           else if(nextPage==4){
             // await imageSubmit()
-            setPage(nextPage+1)
+            if(image.length<1){
+              Alert.alert("Please select at least one image to upload")
+            }
+            else{
+              setPage(nextPage+1)
+            }
+           
           }
           else{
             setPage(nextPage+1)

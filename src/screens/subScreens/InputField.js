@@ -12,11 +12,7 @@ const InputField=(props)=>{
         alignItems:'center',
         justifyContent:"space-between"
     }}>
-    <Text style={{
-        fontSize:15,
-        fontWeight:'bold',
-        
-    }}>{props.content}</Text>
+    <Text style={[styles.textInput]}>{props.content}</Text>
     <TextInput style={[styles.input, props.style]}  onChangeText={(value)=>props.setValue(value)}></TextInput>
     </View>
  )
@@ -31,6 +27,10 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       fontSize:18
     },
+    textInput:{
+        fontSize:15,
+        fontWeight:'bold',
+    }
   });
   
 

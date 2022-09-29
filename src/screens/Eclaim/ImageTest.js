@@ -64,8 +64,6 @@ export default function ImagePickerExample({image,setID,fileID,setImage}) {
       setImage([...image,result.uri]);
       var returnID=await imageUploadRequest(result)
 
-      console.log(returnID)
-
       setID([...fileID,returnID])
     }
 };
