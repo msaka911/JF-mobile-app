@@ -16,10 +16,10 @@ import ClaimForm from './src/screens/ClaimForm';
 import ClaimDetail from './src/ClaimDetail';
 import Agentview from './src/screens/Agent';
 import ClaimPage from './src/screens/Eclaim/ClaimPage'
-import ImageBrowser from './src/screens/Eclaim/ImageUpload';
+// import ImageBrowser from './src/screens/Eclaim/ImageUpload';
 import User from './src/screens/Eclaim/User';
 import EclaimSubmit from'./src/screens/Eclaim/EclaimSubmit'
-
+import Map from './src/screens/Map'
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -74,7 +74,9 @@ function MainDrawerNavigation({navigation }) {
       <Stack.Screen name="ClaimPage" component={ClaimPage}  options={{ title: 'ClaimPage' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="E-claim Portal" component={User}  options={{ title: 'E-claim Portal' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="new E-claim" component={EclaimSubmit}  options={{ title: 'new E-claim' , headerStyle:{backgroundColor:'#006400'}}}/>
-      <Stack.Screen name="ImageBrowser" component={ImageBrowser}  options={{ headerShown: true}}/>
+      <Stack.Screen name="Map" component={Map}  options={{ title: 'Nearest Clinic' , headerStyle:{backgroundColor:'#006400'}}}/>
+
+      {/* <Stack.Screen name="ImageBrowser" component={ImageBrowser}  options={{ headerShown: true}}/> */}
 
     </Drawer.Navigator>
   );

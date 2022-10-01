@@ -2,14 +2,11 @@ import React,{useState,useRef,useEffect} from 'react';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity, Alert ,Keyboard} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
-import { ImageBrowser } from 'expo-image-picker-multiple';
-import { ScrollView } from 'react-native-gesture-handler';
 import InputField from '../subScreens/InputField';
 import Checkbox from 'expo-checkbox';
 
 import ImagePickerExample from './ImageTest';
 
-import * as FileSystem from 'expo-file-system';
 
 import ProgressBar from '../subScreens/ProgressBar'
 import {SignatureScreen} from '../subScreens/Signature'

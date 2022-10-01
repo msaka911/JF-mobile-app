@@ -2,8 +2,6 @@ import React,{useState} from 'react';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
 import logo from '../../assets/logo.png'
 
-import { ImageBrowser } from 'expo-image-picker-multiple';
-
 const HomeScreen = ({ navigation,route }) => {
   var today = new Date()
   var curHr = today.getHours()
@@ -63,6 +61,13 @@ const HomeScreen = ({ navigation,route }) => {
         onPress={() => navigation.navigate('Emergency')}
       >
         <Text style={styles.buttontext} >Emergency Report</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Map')}
+      >
+        <Text style={styles.buttontext} >Find a clinic</Text>
       </TouchableOpacity>
 
     </View>

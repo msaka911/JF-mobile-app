@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/checkbox": "^0.5.12",
     "@react-native-community/datetimepicker": "4.0.0",
+    "@react-native-community/geolocation": "^3.0.1",
     "@react-navigation/drawer": "^6.3.1",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.2",
@@ -27,7 +28,6 @@
     "expo-font": "~10.0.4",
     "expo-image-manipulator": "~10.2.0",
     "expo-image-picker": "~12.0.1",
-    "expo-image-picker-multiple": "^1.4.1",
     "expo-linking": "~3.0.0",
     "expo-secure-store": "~11.1.0",
     "expo-splash-screen": "~0.14.1",
@@ -38,7 +38,6 @@
     "jetifier": "^2.0.0",
     "lodash": "^4.17.21",
     "npm": "^8.11.0",
-    "pod-install": "^0.1.38",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-infinite-scroll-component": "^6.1.0",
@@ -64,8 +63,8 @@
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
     "react-number-format": "^5.0.0-beta.4",
-    "rn-fetch-blob": "^0.12.0",
-    "unimodules-permissions-interface": "^6.1.0"
+    "unimodules-permissions-interface": "^6.1.0",
+    "expo-location": "~14.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
