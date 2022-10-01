@@ -26,9 +26,6 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "config": {
-        "googleMapsApiKey": "AIzaSyDNH7BvuQVCKMfAAbN3ZJdzp0MjMDWymwE"
-      },
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow app to access current location?"
       }

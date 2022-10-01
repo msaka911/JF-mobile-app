@@ -30,7 +30,8 @@ const ClaimItem=({item})=>{
   return(
     <Card  mode="outlined">
     <Card.Content>
-    <Title>{item.eclaim_no||item.claim_no}</Title>
+    {item.eclaim_no?<Title>{item.eclaim_no}</Title>:null}              
+    <Paragraph style={styles.paraStyle}>Claim Number: {item.claim_no}</Paragraph>
     <Paragraph style={styles.paraStyle}>Claimed Amount: ${item.billed||""}</Paragraph>
     <Paragraph style={styles.paraStyle}>Status: {item.status||""}</Paragraph>
     <Paragraph style={styles.paraStyle}>Insured Name: {item.insured_first_name||""} {item.insured_last_name||""}</Paragraph>
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
       color:"white",
     },
     paraStyle:{
-        fontSize:18,
+        fontSize:17,
         fontWeight:"500",
         marginBottom:9
     },

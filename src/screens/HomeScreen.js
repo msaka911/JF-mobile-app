@@ -1,12 +1,11 @@
 import React,{useState} from 'react';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
 import logo from '../../assets/logo.png'
+import {GOOGLE_MAP_API} from "@env"
 
 const HomeScreen = ({ navigation,route }) => {
   var today = new Date()
   var curHr = today.getHours()
-  
-
   
 
 
