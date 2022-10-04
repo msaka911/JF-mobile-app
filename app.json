@@ -28,7 +28,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow app to access current location?"
-      }
+      },
+      "bundleIdentifier":"Michael.jfinsurance"
     },
     "android": {
       "adaptiveIcon": {

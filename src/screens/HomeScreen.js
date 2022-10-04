@@ -66,7 +66,7 @@ const HomeScreen = ({ navigation,route }) => {
         style={styles.button}
         onPress={() => navigation.navigate('Map')}
       >
-        <Text style={styles.buttontext} >Find a clinic</Text>
+        <Text style={styles.buttontext} >Find Clinic</Text>
       </TouchableOpacity>
 
     </View>

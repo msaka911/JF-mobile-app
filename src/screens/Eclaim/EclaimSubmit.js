@@ -1,12 +1,13 @@
-import React,{useState,useRef,useEffect} from 'react';
-import { Text, StyleSheet, View, Image,Button, TouchableOpacity, Alert ,Keyboard} from 'react-native';
+import React,{useState,useRef,useEffect,useCallback} from 'react';
+import { Text, StyleSheet, View, Image,Button, TouchableOpacity, Alert ,Keyboard,ScrollView} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 import InputField from '../subScreens/InputField';
 import Checkbox from 'expo-checkbox';
 
 import ImagePickerExample from './ImageTest';
-
+import DropDownPicker from "react-native-dropdown-picker";
+import {useForm, Controller} from 'react-hook-form';
 
 import ProgressBar from '../subScreens/ProgressBar'
 import {SignatureScreen} from '../subScreens/Signature'
@@ -16,7 +17,30 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 const EclaimSubmit=({ navigation,route })=>{
-    
+  const [dropdownOpen, setOpen] = useState(false);
+  const [dropdownValue, setValue] = useState(null);
+  const [dropdown, setDropdown] = useState([
+    { label: "Ontario", value: "ON" },
+    { label: "Quebec", value: "QC" },
+    { label: "British Columbia", value: "BC" },
+    { label: "Alberta", value: "AB" },
+    { label: "Prince Edward Island", value: "PE" },
+    { label: "Nova Scotia", value: "NS" },
+    { label: "New Brunswick", value: "NB" },
+    { label: "Saskatchewan", value: "SK" },
+    { label: "Newfoundland and Labrador", value: "NL" },
+    { label: "Manitoba", value: "MB" },
+  ]);
+
+  const onDropdownOpen = useCallback(() => {
+    // setOpen(false);
+  }, []);
+
+  const { handleSubmit, control } = useForm();
+
+
+
+
     const [image, setImage] = useState([]);
 
     const [nextPage,setPage]=useState(1)
@@ -162,7 +186,6 @@ const EclaimSubmit=({ navigation,route })=>{
     async function onSubmit(){
       var converted=`[${fileID}]`
       var id=`${signID}`
-      var arrivalDate= `${arrival_date}`
       var formdata = new FormData();
       let api_id = await SecureStore.getItemAsync('api_id');
       let token = await SecureStore.getItemAsync('token');
@@ -177,6 +200,8 @@ const EclaimSubmit=({ navigation,route })=>{
       let insure_email=await SecureStore.getItemAsync('email');
       let contact=await SecureStore.getItemAsync('phone');
      
+      
+      let arrivalDate=`${arrival_date}`
       formdata.append('imgfile',converted);
       formdata.append('sign_name',lastname);
       formdata.append('sign_image',id);
@@ -240,7 +265,8 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('email',insure_email);
       formdata.append('post_code',postal_code);
       formdata.append('arrival_date_canada',arrivalDate);
-      
+      formdata.append('arrival_date',arrivalDate);
+
       formdata.append('contact_first_name',contactfirstname);
       formdata.append('contact_last_name',contactlastname);
       formdata.append('contact_email',email);
@@ -327,7 +353,7 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('exinfo_cancel_reason',null);
       formdata.append('exinfo_other_party_reimbursed_refunded','N');
       formdata.append('date_symptoms_input',(new Date(date_symptoms)).toUTCString());
-      formdata.append('date_first_physician_input',(new Date(date_first_physician.toISOString().split('T')[0])).toUTCString());
+      formdata.append('date_first_physician_input',(new Date(date_first_physician.toISOString().split('T')[0])));
       formdata.append('exinfo_depature_date_input',null);
       formdata.append('exinfo_return_date_input',null);
       formdata.append('exinfo_cancelled_date_input',null);
@@ -337,7 +363,7 @@ const EclaimSubmit=({ navigation,route })=>{
       formdata.append('exinfo_death_date_input',null);
       formdata.append('exinfo_other_occurred_date_input',null);
       formdata.append('expenses_claimed_date_of_service_input',null);
-      formdata.append('arrival_date_canada_input',(new Date(arrival_date)).toUTCString());
+      // formdata.append('arrival_date_canada_input',arrivalDate);
       formdata.append('exinfo_loss_date_input',null);
       formdata.append('exinfo_spouse_dob_input',null);
       formdata.append('amount',amount);
@@ -349,8 +375,6 @@ const EclaimSubmit=({ navigation,route })=>{
         method: 'POST',
         body: formdata         
       };
-
-      console.log(formdata)
 
 
       fetch("https://claim.mmoo.ca/Api/submit", requestOptions)
@@ -396,16 +420,75 @@ const onPhysician = (event, selectedValue) => {
 } 
 
    
-const SecondPage=React.useCallback(()=>(
-  <View>
-  {nextPage==2?
-    <View>
-       <InputField style={{width:180}} content="Claim Amount $" setValue={setAmount}/>
-       <InputField style={{width:180}} content="Symptom" setValue={setDx}/>
+
+  
+    return(
+      <View style={{flex:0.99,padding:10}}>
+        <KeyboardAwareScrollView contentContainerStyle={{alignItems: 'center'}}
+        nestedScrollEnabled={true}
+        persistentScrollbar={true}
+        >
+
+        <View  >
+        {nextPage==1?
+              
+        <View >
+          <View style={{flexDirection:'row'}}>
+            <InputField  style={{width:185}} content="Contact First Name" setValue={setFirstName}/>
+
+            <InputField  style={{width:185}} content="Last Name" setValue={setLastName}/>
+          </View>
+          <InputField style={{width:'80%'}} keyboardType='phone-pad' content="Contact Number" setValue={setContact}/>
+
+          <InputField style={{width:'80%'}} keyboardType='email-address' content="Contact Email" setValue={setE}/>
+
+          <InputField style={{width:'80%'}} content="Address" setValue={setStreet}/>
+
+          <InputField style={{width:'80%'}}content="City" setValue={setC}/>
+
+          <InputField style={{width:'80%'}} content="Province" setValue={setP}/>
+
+
+              {/* <View style={{   
+                marginHorizontal: 10,
+                width: "50%",
+                marginBottom: 15,
+              }}>
+                <DropDownPicker
+                style={{borderColor: "#B7B7B7", height: 50}}
+                open={dropdownOpen}
+                value={dropdownValue} //dropdownValue
+                items={dropdown}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setDropdown}
+                placeholder="Select Province"
+                placeholderStyle={{color: "grey"}}
+                onOpen={onDropdownOpen}
+                zIndex={3000}
+                zIndexInverse={1000}
+              />
+              </View> */}
+
+          <InputField style={{width:'80%'}} content="Postal Code" setValue={setPostal}/>
+
+          <InputField style={{width:'80%'}}  content="Guardian Name" setValue={setGuardian}/>
+          
+          <InputField style={{width:'80%'}} keyboardType='phone-pad' content="Guardian Contact" setValue={setGuardianContact}/>
+
+          
+            
+        </View>
+        :null}
+         {nextPage==2?
+
+    <View >
+       <InputField style={{width:'80%'}} keyboardType='decimal-pad' content="Claim Amount $" setValue={setAmount}/>
+       <InputField style={{width:'80%'}} content="Symptom" setValue={setDx}/>
        
        <View style={{flexDirection:'row', alignItems:'center',justifyContent:'center'}}>
       
-       <Text style={{width:180, fontSize:15, fontWeight:'bold'}}>
+       <Text style={{fontSize:18, fontWeight:'bold'}}>
             Symptom Starting Date: 
        </Text>
  
@@ -415,88 +498,55 @@ const SecondPage=React.useCallback(()=>(
        </View>
  
        <View style={{alignItems:'center',flex:1,flexDirection:'row',marginTop:15,marginBottom:10}}>
-         <Text style={{fontSize:15,fontWeight:'bold', flex:0.9,alignItems:"center"}}>
+         <Text style={{fontSize:18,fontWeight:'bold', flex:0.9,alignItems:"center"}}>
              Sought Treatment Before?            
          </Text>
-         <Text style={{fontSize:15,fontWeight:'bold'}}> {treatment_before?`Yes`:`No`}</Text>
+         <Text style={{fontSize:18,fontWeight:'bold'}}> {treatment_before?`Yes`:`No`}</Text>
          <Switch  style={{margin:10}} value={treatment_before} onValueChange={()=>setTreatment(!treatment_before)} />
        
        </View>
          
        <View style={{flexDirection:'row', alignItems:'center',justifyContent:'center'}}>
       
-      <Text style={{width:200, fontSize:15, fontWeight:'bold'}}>
+      <Text style={{ fontSize:18, fontWeight:'bold'}}>
             Date first visit physician: 
       </Text>
  
-      <DateTimePicker  mode="date" display='calendar' value={new Date(date_first_physician)} onChange={onPhysician} style={{width:150,height:100}}/>
+      <DateTimePicker  mode="date" display='calendar' value={new Date(date_first_physician)} onChange={onPhysician} style={{width:160,height:100}}/>
       </View>
      </View>  
     :null}
-    </View>
-)
-
-  
-,[nextPage==2])
-  
-    return(
-      <View style={{flex: 0.95}}>
-        <KeyboardAwareScrollView contentContainerStyle={{alignItems: 'center'}}
-        
-        persistentScrollbar={true}
-        >
-        <View >
-        {nextPage==1?
-        <View>
-          <View style={{flexDirection:'row'}}>
-            <InputField  style={{width:110}} content="Contact Name" setValue={setFirstName}/>
-
-            <InputField  style={{width:110}} setValue={setLastName}/>
-          </View>
-          <InputField style={{width:180}} content="Contact Number" setValue={setContact}/>
-
-          <InputField style={{width:180}} content="Contact Email" setValue={setE}/>
-
-          <InputField style={{width:180}} content="Address" setValue={setStreet}/>
-
-          <InputField style={{width:180}} content="City" setValue={setC}/>
-
-          <InputField style={{width:180}} content="Province" setValue={setP}/>
-
-          <InputField style={{width:180}} content="Postal Code" setValue={setPostal}/>
-
-          <InputField style={{width:180}} content="Guardian Name" setValue={setGuardian}/>
-          
-          <InputField style={{width:180}} content="Guardian Contact" setValue={setGuardianContact}/>
-
-          
-            
-        </View>  
-       :null}
-         
-         <SecondPage/>
 
 
 
          {nextPage==3?
-          <View style={{alignItems:'center',flex:1,marginTop:20}}>
-            <Text style={{fontSize:20,fontWeight:'bold',flex:1,alignItems:"center",margin:5}}>
+         
+          <View style={{alignItems:'center',marginTop:20}}>
+            
+            <View style={{flexDirection:'row',alignItems:"center",justifyContent:'space-between'}}>
+            <Text style={{fontSize:20,fontWeight:'bold',alignItems:"center"}}>
               Payee Type:   {!payees_payment_type?'By Cheque':'E-transfer'} 
             </Text>
             <Switch  style={{margin:10}} value={payees_payment_type} onValueChange={onToggleSwitch} />
-            {payees_payment_type?
-            <View style={{ flexDirection:'row',flexWrap: 'wrap', alignItems:'center', justifyContent:'center'}}>
-              <Text style={{fontSize:20,fontWeight:'bold',alignItems:"center", flexBasis: '40%'}} >Payee Name</Text>
-              <InputField style={{width:200}}  setValue={setName}/>
-              <Text style={{fontSize:20,fontWeight:'bold',alignItems:"center", flexBasis: '40%'}}>Payee Email</Text>
-              <InputField style={{width:200}} setValue={setEmail}/>
             </View>
-              
+
+            {payees_payment_type?
+            <>
+            <View style={{ justifyContent:'center',width:"100%"}}>
+              <InputField style={{width:"100%"}} content="Payee Name" setValue={setName}/>
+              <InputField style={{width:"100%"}}  content="Payee Email"  keyboardType='email-address' setValue={setEmail}/>
+            </View>
+
+            <View>
+
+
+            </View>
+            </>
               :
               
-              <View  style={{width:330}}>
-                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'baseline',marginTop:20}}>
-                  <Text style={{fontSize:20,fontWeight:'bold',alignItems:"center"}}>
+              <View  style={{width:"100%"}}>
+                <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:30,alignContent:"center"}}>
+                  <Text style={{fontSize:18,fontWeight:'600'}}>
                     same as contact?
                   </Text>
                   <Switch  style={{marginBottom:5}} value={payees_cheque} onValueChange={()=>toggleCheque(!payees_cheque)} />
@@ -507,12 +557,12 @@ const SecondPage=React.useCallback(()=>(
                     <Text style={{fontSize:20,fontWeight:'bold'}}>Payee Address:   {street_address} {city} {province}</Text>
                   </View>
                   :
-                   <View>
-                    <InputField style={{width:180}} content="Payee Name" setValue={setName}/>
-                    <InputField style={{width:180}} content="Address" setValue={setAddress}/>
-                    <InputField style={{width:180}} content="City" setValue={setCity}/>
-                    <InputField style={{width:180}} content="Province" setValue={setProvince}/>
-                    <InputField style={{width:180}} content="Postal Code" setValue={setPostcode}/>
+                   <View  >
+                    <InputField style={{width:'100%'}}  content="Payee Name" setValue={setName}/>
+                    <InputField style={{width:'100%'}}   content="Address" setValue={setAddress}/>
+                    <InputField style={{width:'100%'}} content="City" setValue={setCity}/>
+                    <InputField style={{width:'100%'}} content="Province" setValue={setProvince}/>
+                    <InputField style={{width:'100%'}}  content="Postal Code" setValue={setPostcode}/>
                   </View>
                   }
                  
@@ -543,10 +593,11 @@ const SecondPage=React.useCallback(()=>(
 
         </View>  
        :null}
-
+     
         </View>
 
       </KeyboardAwareScrollView>
+      
       {nextPage==5?
         <View style={{height:610,marginBottom:40}}>
             <SignatureScreen signature={signature} setSign={setSign}></SignatureScreen>
@@ -643,7 +694,7 @@ const SecondPage=React.useCallback(()=>(
 
         </TouchableOpacity>
         </View>
-        <ProgressBar style={{alignItems: 'center',height:20,marginTop:50}} progress={Math.floor(nextPage/6*100)/100}></ProgressBar>
+        <ProgressBar style={{alignItems: 'center',height:15,marginTop:30, borderRadius:10}} progress={Math.floor(nextPage/6*100)/100}></ProgressBar>
 
       </View>
 

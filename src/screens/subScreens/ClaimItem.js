@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, Image, TouchableOpacity,LayoutAnimation,Animate
 import { useState, useEffect,useRef} from 'react';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import uniqueId from 'lodash/uniqueId'
+import { CurrentRenderContext } from '@react-navigation/native';
 
 
 const ClaimItem=({item})=>{
@@ -71,21 +72,32 @@ const ClaimItem=({item})=>{
             >
             {Object.keys(item.items).map((claimItem)=>{
             return( 
-            <View style={{ width: windowWidth,margin:5}} key={item.items[claimItem].claim_item_no+ uniqueId('id')}>
+            <View style={{ width: windowWidth}} key={item.items[claimItem].claim_item_no+ uniqueId('id')}>
 
-          
-
-
-
-
-            <Card   mode="outlined">
+            <Card   mode="outlined" style={{alginself:'center'}}>
             <Card.Content>
             <Title>{item.items[claimItem].diagnosis}</Title>
-            <Paragraph>Service Date: {item.items[claimItem].date_of_service}</Paragraph>
-            <Paragraph>Claimed Amount: ${item.items[claimItem].amount_billed}</Paragraph>
-            <Paragraph>Amount Payable: ${item.items[claimItem].amt_payable}</Paragraph>
-            <Paragraph>Status: {item.items[claimItem].status}</Paragraph>
-            <Paragraph>{item.items[claimItem].reason_other||item.items[claimItem].reason||null}</Paragraph>
+
+            <View style={styles.container}>
+            <Paragraph style={styles.itemStyle}>Service Date: </Paragraph>
+            <Paragraph style={styles.itemStyle}>{item.items[claimItem].date_of_service}</Paragraph>
+            </View>
+
+            <View style={styles.container}>
+            <Paragraph style={styles.itemStyle}>Claimed Amount: </Paragraph>
+            <Paragraph style={styles.itemStyle}>${item.items[claimItem].amount_billed}</Paragraph>
+            </View>
+
+            <View style={styles.container}>
+            <Paragraph style={styles.itemStyle}>Amount Payable: </Paragraph>
+            <Paragraph style={styles.itemStyle}>${item.items[claimItem].amt_payable}</Paragraph>
+            </View>
+            <View style={styles.container}>
+            <Paragraph style={styles.itemStyle}>Status:</Paragraph>
+            <Paragraph style={styles.itemStyle}>{item.items[claimItem].status}</Paragraph>
+            </View>
+              {item.items[claimItem].reason_other?<Paragraph>{item.items[claimItem].reason_other}</Paragraph>:null}
+              {item.items[claimItem].reason?<Paragraph>{item.items[claimItem].reason}</Paragraph>:null}
             </Card.Content>
             </Card>
             </View>)})}
@@ -153,6 +165,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         margin:10
+      },
+      itemStyle:{
+        fontSize:18,
+        fontWeight:'bold',
+        marginTop:6
+      },
+      container:{
+        flexDirection:'row',
+        justifyContent:'space-between'
       }
 })
 

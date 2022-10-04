@@ -20,6 +20,7 @@ import ClaimPage from './src/screens/Eclaim/ClaimPage'
 import User from './src/screens/Eclaim/User';
 import EclaimSubmit from'./src/screens/Eclaim/EclaimSubmit'
 import Map from './src/screens/Map'
+import Policycard from './src/screens/Eclaim/Policycard';
 
 import CustomDrawerContent from './drawer/CustomDrawerContent';
 import CustomHeader from './drawer/CustomHeader';
@@ -75,6 +76,7 @@ function MainDrawerNavigation({navigation }) {
       <Stack.Screen name="E-claim Portal" component={User}  options={{ title: 'E-claim Portal' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="new E-claim" component={EclaimSubmit}  options={{ title: 'new E-claim' , headerStyle:{backgroundColor:'#006400'}}}/>
       <Stack.Screen name="Map" component={Map}  options={{ title: 'Nearest Clinic' , headerStyle:{backgroundColor:'#006400'}}}/>
+      <Stack.Screen name="Policycard" component={Policycard}  options={{ title: 'Policy Card' , headerStyle:{backgroundColor:'#006400'}}}/>
 
       {/* <Stack.Screen name="ImageBrowser" component={ImageBrowser}  options={{ headerShown: true}}/> */}
 

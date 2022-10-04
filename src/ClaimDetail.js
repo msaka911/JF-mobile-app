@@ -3,11 +3,24 @@ import { Text, StyleSheet, View ,FlatList, TouchableOpacity,Alert,Animated} from
 import {REACT_APP_BACKEND} from '@env'
 import Spacer from './screens/subScreens/Spacer';
 
+import { ListItem } from 'react-native-elements'
+import { AntDesign } from '@expo/vector-icons';
 
 
 const ClaimDetail=({navigation})=>{
+  const list = [
+    {
+      name: 'Amy Farha',
+      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+      subtitle: 'Vice President'
+    },
+    {
+      name: 'Chris Jackson',
+      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+      subtitle: 'Vice Chairman'
+    }]
 
-    const [data,setData]=useState(["1.Filled Claim Form","2.Clinic medical records/Hospital emergency room records/Doctor notes","3.Doctor referral letter","4.Receipts or any oustanding bills" ])
+    const [data,setData]=useState(["1. Fill E-claim Form","2.Upload Clinic medical records/Hospital emergency room records/Doctor notes","3.Upload Doctor referral letter for lab text/paramedical service","4. Upload Receipts or any oustanding bills","5. Upload Official prescription for your prescribed drug" ])
     const axios = require('axios');
      
     const posAnim = useRef(new Animated.Value(400)).current
@@ -45,32 +58,35 @@ const ClaimDetail=({navigation})=>{
     //       })
     // },[])
 
-    const renderItem = ({ item }) => (
-        <Text style={styles.textStyle}>{item}</Text>
-      );
-
     const styles=StyleSheet.create({
         viewStyle:{
-        alignItems:'center',
-        flex:0.4,
+        flex:1,
         margin:10
         },
         textStyle:{
-            margin:5,
+            marginBottom:10,
             fontSize:20,
             fontWeight:"400"
         },
         buttonStyle:{
             backgroundColor:"#dcdcdc",
-            padding:10,
+            padding:15,
             width:'75%',
             alignItems:'center',
             borderRadius:11,
-            marginBottom:35
+            marginBottom:35,
+            alignSelf:'center'
         },
         buttontextStyle:{
           fontSize:20,
-          fontWeight:"400"
+          fontWeight:"700",
+          
+      },
+      itemStyle:{
+        fontSize:18,
+        fontWeight:"600",
+        marginBottom:20,
+
       }
       
       }
@@ -89,13 +105,34 @@ const ClaimDetail=({navigation})=>{
         }],       
       }}
     >
+      <View style={{}}>
+        
        <Text style={styles.textStyle}>Required Documents:</Text>
-       <Spacer/>
-       <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item}
-      />
+       
+       <View style={{width:'100%'}}>
+          {
+            data.map((l) => (
+              
+              <ListItem
+                key={l}
+                title={l}
+                bottomDivider
+              >
+                <AntDesign name="pushpino" size={20} color="black" />
+                <ListItem.Content>
+                <ListItem.Title>{l}</ListItem.Title>
+              </ListItem.Content>
+              </ListItem>
+            ))
+          }
+        </View>
+
+
+
+
+
+
+      </View>
       </Animated.View>
         <Spacer/>
         <TouchableOpacity style={styles.buttonStyle} onPress={()=>navigation.navigate("MainDrawer",{ screen: 'Webview' })}>

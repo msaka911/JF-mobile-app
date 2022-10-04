@@ -3,7 +3,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 
-import { Text, StyleSheet, View, Image,Button, TouchableOpacity,Alert, Pressable,Keyboard } from 'react-native';
+import { Text, StyleSheet, View, Image,Button, TouchableOpacity,Alert, TouchableWithoutFeedback,Keyboard } from 'react-native';
 import { useState } from 'react';
 import {REACT_APP_BACKEND} from '@env'
 import uniqueId from 'lodash/uniqueId'
@@ -17,7 +17,7 @@ import { max } from 'lodash';
 const Webview=({navigation})=>{
     const [policy_number,setPolicy]=useState("")
 
-    const [date, setDate] = useState(new Date("2000-01-01T00:00:00"))
+    const [date, setDate] = useState(new Date("1996-02-16T00:00:00"))
     const [open, setOpen] = useState(true)
 
     const id = uniqueId('jfinsurancepolicy')

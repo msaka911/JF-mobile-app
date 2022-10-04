@@ -1,34 +1,30 @@
 import React,{useState} from 'react';
-import { Text, StyleSheet, View, Image,TextInput, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+
+import { TextInput } from 'react-native-paper';
 
 const InputField=(props)=>{
  
 
  return(
     <View style={{
-        marginLeft:5,
-        height: 80,
-        flexDirection:'row',
+        margin:5,
+        height: 75,
         alignItems:'center',
         justifyContent:"space-between"
     }}>
-    <Text style={[styles.textInput]}>{props.content}</Text>
-    <TextInput style={[styles.input, props.style]}  onChangeText={(value)=>props.setValue(value)}></TextInput>
-    </View>
+    <TextInput mode='outlined' label={props.content} style={[styles.input, props.style]} keyboardType={props.keyboardType||`default`} onChangeText={(value)=>props.setValue(value)}></TextInput>
+    </View> 
  )
 }
 
 const styles = StyleSheet.create({
     input: {
-      marginLeft:10,
-      borderTopWidth:0,
-      borderRightWidth:0,
-      borderLeftWidth:0,
-      borderWidth: 1,
-      fontSize:18
+      fontSize:18,
+      borderRadius:5
     },
     textInput:{
-        fontSize:15,
+        fontSize:17,
         fontWeight:'bold',
     }
   });

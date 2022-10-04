@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, StyleSheet, View, Modal, RefreshControl,LayoutAnimation,Animated,useWindowDimensions,ScrollView, Alert,Pressable } from 'react-native';
+import { Text, StyleSheet, View, Modal, RefreshControl,LayoutAnimation,ActivityIndicator,ScrollView, Alert,Pressable } from 'react-native';
 import { useState, useEffect} from 'react';
 import {REACT_APP_BACKEND} from '@env'
 import { CustomLayoutSpring } from "react-native-animation-layout";
@@ -9,10 +9,10 @@ import Spacer from '../subScreens/Spacer';
 import * as SecureStore from 'expo-secure-store';
 
 const ClaimPage=({route,navigation})=>{
-    
+    const [loading, setLoading]=useState(false)
     const[claimData, setData]=useState();
     const [refreshing, setRefreshing]=useState(false)
-
+    const [empty,setEmpty]=useState(false)
 
 
     const onRefresh=React.useCallback(()=>{
@@ -46,6 +46,9 @@ async function retrieve(){
             .then(response => response.json())
             .then((result) => {
                 setData(result)
+                if (Object.keys(result.claims).length==0){
+                   setEmpty(true)
+                }
                 LayoutAnimation.configureNext(CustomLayoutSpring());
             })
             .catch(error => {
@@ -61,16 +64,24 @@ async function retrieve(){
    }
 
 
-    useEffect(async()=>{
-        await retrieve()
+    useEffect(()=>{
+        async function getClaims(){
+          await retrieve()
+        }
+
+        getClaims()
       // setRefreshing(false)
     },[])
 
-    useEffect(async()=>{
-      if(refreshing==true){
-        await retrieve()
-        setRefreshing(false)
+    useEffect(()=>{
+
+      async function refreshPage(){
+        if(refreshing==true){
+          await retrieve()
+          setRefreshing(false)
+        }
       }
+      refreshPage()
   },[refreshing])
     //---------------------fetch claim information--------------------------
 
@@ -133,7 +144,9 @@ const styles=StyleSheet.create({
                 <ClaimItem key={item.claim_no} item={item}/>
             )
 
-            }): <Modal
+            }):<View style={{alignItems:'center',justifyContent:'center'}}><ActivityIndicator size="large" color="#0000ff" /></View>}
+
+            {empty?<Modal
             animationType="slide"
             transparent={false}
             visible={modalVisible}
@@ -158,7 +171,7 @@ const styles=StyleSheet.create({
             </Pressable>
            
             </View>
-            </Modal>}
+            </Modal>:null}
       </ScrollView>
     )
     
