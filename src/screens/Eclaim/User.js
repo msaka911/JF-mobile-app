@@ -52,7 +52,6 @@ const User=({route,navigation})=>{
     
     
             var parsed= data
-            console.log(data)
             if(typeof parsed!==`undefined`&&typeof parsed.policy!=='undefined'){
                 save('data',JSON.stringify(data))
                 save('effective_date',parsed.policy.effective_date)

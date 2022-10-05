@@ -3,8 +3,8 @@ import { Image, View, Platform ,ScrollView,TouchableOpacity,Text,Alert} from 're
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
 
+
 export default function ImagePickerExample({image,setID,fileID,setImage}) {
-  
 
 
   async function imageUploadRequest(result){
@@ -36,7 +36,6 @@ export default function ImagePickerExample({image,setID,fileID,setImage}) {
       })
       .then((data)=>{
        if(data.status==`OK`){
-                // console.log("here",data.file_id)
                 return data.file_id
       }
       })
@@ -69,13 +68,37 @@ export default function ImagePickerExample({image,setID,fileID,setImage}) {
 };
  
 
+const takePhotos = async () => {
+
+  let photo = await ImagePicker.launchCameraAsync();
+            if (!photo.cancelled) {
+              setImage([...image,photo.uri]);
+              var returnPhotoID=await imageUploadRequest(photo)
+              setID([...fileID,returnPhotoID])
+            }
+
+  // if (cameraPermission.status !== 'granted') {
+  //     const newPermission = await Permissions.askAsync(Permissions.CAMERA);
+  //     if (newPermission.status === 'granted') {
+            
+  //     }
+  // } else {
+  //       Alert.alert("Cannot access the camera",'',[])
+  // }
+};
+
   return (
     <View style={{ flex:1,alignItems:'center'}}>
       <TouchableOpacity 
-        style={{alignItems: 'center',justifyContent: 'center',marginTop:200}} 
+        style={{alignItems: 'center',justifyContent: 'center',marginTop:100}} 
         onPress={()=>pickImage(image,fileID)}> 
 
-                <Text style={{fontSize:25,fontWeight:'bold'}}>{image.length>0?'More Images':`Choose Images`}</Text>
+                <Text style={{fontSize:30,fontWeight:'bold'}}>{image.length>0?'More Images':`Choose Images`}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        style={{alignItems: 'center',justifyContent: 'center',marginTop:100}} 
+        onPress={()=>takePhotos()}> 
+                <Text style={{fontSize:30,fontWeight:'bold'}}>Taking Photos</Text>
         </TouchableOpacity>
       <ScrollView horizontal={true} style={{flex: 1,flexDirection:'row',marginTop:30}}>
       {image && 

@@ -33,9 +33,9 @@ const ClaimItem=({item})=>{
     <Card.Content>
     {item.eclaim_no?<Title>{item.eclaim_no}</Title>:null}              
     <Paragraph style={styles.paraStyle}>Claim Number: {item.claim_no}</Paragraph>
+    <Paragraph style={styles.paraStyle}>Insured Name: {item.insured_first_name||""} {item.insured_last_name||""}</Paragraph>
     <Paragraph style={styles.paraStyle}>Claimed Amount: ${item.billed||""}</Paragraph>
     <Paragraph style={styles.paraStyle}>Status: {item.status||""}</Paragraph>
-    <Paragraph style={styles.paraStyle}>Insured Name: {item.insured_first_name||""} {item.insured_last_name||""}</Paragraph>
     </Card.Content>
     <Card.Cover style={{
             height: 120,
@@ -76,7 +76,7 @@ const ClaimItem=({item})=>{
 
             <Card   mode="outlined" style={{alginself:'center'}}>
             <Card.Content>
-            <Title>{item.items[claimItem].diagnosis}</Title>
+            <Title style={{fontSize:30,fontWeight:'bold'}}>{item.items[claimItem].diagnosis}</Title>
 
             <View style={styles.container}>
             <Paragraph style={styles.itemStyle}>Service Date: </Paragraph>
@@ -96,8 +96,27 @@ const ClaimItem=({item})=>{
             <Paragraph style={styles.itemStyle}>Status:</Paragraph>
             <Paragraph style={styles.itemStyle}>{item.items[claimItem].status}</Paragraph>
             </View>
-              {item.items[claimItem].reason_other?<Paragraph>{item.items[claimItem].reason_other}</Paragraph>:null}
-              {item.items[claimItem].reason?<Paragraph>{item.items[claimItem].reason}</Paragraph>:null}
+
+              {/* {item.items[claimItem].reason_other?
+               <View style={styles.container}>
+              <Paragraph style={styles.itemStyle}>Reason:</Paragraph>
+              <Paragraph style={styles.itemStyle}>{item.items[claimItem].reason_other}</Paragraph>
+              </View>
+              :null} */}
+
+              {item.items[claimItem].reason!=="Other"&&item.items[claimItem].reason?
+              <View style={styles.container}>
+              <Paragraph style={styles.itemStyle}>Reason:</Paragraph>
+              <Paragraph style={styles.reasonText}>{item.items[claimItem].reason}</Paragraph>
+              </View>
+              : 
+              <View style={styles.container}>
+
+              <Paragraph style={styles.itemStyle}>Reason:</Paragraph>
+              <Paragraph style={styles.reasonText}>{item.items[claimItem].reason_other}</Paragraph>
+              </View>
+            }
+
             </Card.Content>
             </Card>
             </View>)})}
@@ -169,11 +188,18 @@ const styles = StyleSheet.create({
       itemStyle:{
         fontSize:18,
         fontWeight:'bold',
-        marginTop:6
+        marginTop:6,
+        flex:1
       },
       container:{
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        alignItems:'flex-start'
+      },
+      reasonText:{
+        fontSize:16,
+        flex:1,
+        marginTop:6
       }
 })
 

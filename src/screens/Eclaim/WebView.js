@@ -3,15 +3,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 
-import { Text, StyleSheet, View, Image,Button, TouchableOpacity,Alert, TouchableWithoutFeedback,Keyboard } from 'react-native';
+import { Text, StyleSheet, View, Image,Button, TouchableOpacity,Alert, TouchableWithoutFeedback,Keyboard,KeyboardAvoidingView } from 'react-native';
 import { useState } from 'react';
-import {REACT_APP_BACKEND} from '@env'
 import uniqueId from 'lodash/uniqueId'
 
 import Spacer from '../subScreens/Spacer';
 import { Input } from 'react-native-elements';
 import DateTimePicker  from '@react-native-community/datetimepicker';
-import { max } from 'lodash';
 
 
 const Webview=({navigation})=>{
@@ -73,9 +71,7 @@ const Webview=({navigation})=>{
     //   }
     // },[input2])
     
-    async function save(key, value) {
-      await SecureStore.setItemAsync(key, value);
-    }
+
 
     
 
@@ -113,17 +109,6 @@ const Webview=({navigation})=>{
             //     console.log('cannot set up cookie')
             //   }
             // }
-            for(let entry of response.headers.entries()) {
-              // if(entry[1].includes('jf_claim')){
-              //   console.log(entry['set-cookie']);
-              //   console.log(entry[1])
-              // }
-              // console.log(entry[0]);
-              // console.log(entry[1])
-              // console.log(entry.cookie)
-              // console.log( entry[1])
-
-            }
             // console.log(response.type)
             // console.log(response.status)
 
@@ -137,11 +122,9 @@ const Webview=({navigation})=>{
               navigation.navigate("E-claim Portal",{ data: data,api_id:combinedID})
             }
             else{
-              return Promise.reject(response)
+              return Promise.reject(data)
             }
            })
-          //  .then((data)=>navigation.navigate("E-claim Portal",{ data: data,api_id:id}))
-          //  .then(()=>console.log("here"))
 
             .catch(error=>{  
               Alert.alert(
@@ -182,20 +165,21 @@ const Webview=({navigation})=>{
             padding:30,
           },
         inputStyle:{
-            marginTop:25,
+            marginTop:23,
             color:'black',
             fontSize:25,
-            width:300
+            width:230
              }
             ,
         textStyle:{
             fontSize:25,
+            fontWeight:'bold'
          },
         buttonStyle:{
           alignItems: "center",
           backgroundColor: "#DDDDDD",
           padding: 10,
-          marginTop:50,
+          marginTop:40,
           borderRadius:10,
           shadowOffset: {
             width: 0,
@@ -214,7 +198,8 @@ const Webview=({navigation})=>{
               size={25}
               color='black'
 
-        />} leftIconContainerStyle={{marginRight:5}} containerStyle={styles.inputStyle} placeholder="Policy Number" value={policy_number} onChangeText={(inputContent)=>setPolicy(inputContent)}/>
+        />} leftIconContainerStyle={{marginRight:10}} inputStyle={styles.textStyle}  containerStyle={styles.inputStyle} placeholder="Policy Number" value={policy_number} onChangeText={(inputContent)=>setPolicy(inputContent)}/>
+        <KeyboardAvoidingView style={styles.viewStyle}>
        <Spacer/>
        <TouchableOpacity onPress={focusEvent} style={{
             width:200,
@@ -239,6 +224,7 @@ const Webview=({navigation})=>{
     {open?<DateTimePicker  mode="date" display='spinner' value={new Date(date)} onChange={onChange} style={{width:400,height:200}} />:null}
 
        <TouchableOpacity style={styles.buttonStyle} onPress={onButtonClick}><Text style={styles.textStyle}> Submit</Text></TouchableOpacity>
+       </KeyboardAvoidingView>
     </View> 
     )
 }

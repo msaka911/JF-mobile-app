@@ -19,8 +19,6 @@ function CustomDrawerContent(props) {
       return e.key === key;
     });
 
-    console.log(key)
-    console.log(filteredMainDrawerRoutes.route)
 
     const selectedRoute = filteredMainDrawerRoutes.route;
     props.navigation.toggleDrawer();

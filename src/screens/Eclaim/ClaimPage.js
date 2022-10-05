@@ -144,7 +144,7 @@ const styles=StyleSheet.create({
                 <ClaimItem key={item.claim_no} item={item}/>
             )
 
-            }):<View style={{alignItems:'center',justifyContent:'center'}}><ActivityIndicator size="large" color="#0000ff" /></View>}
+            }):<View style={{alignContent:'center',justifyContent:'center',flex:1}}><ActivityIndicator size="large" color="#0000ff" /></View>}
 
             {empty?<Modal
             animationType="slide"

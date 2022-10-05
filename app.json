@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-starter-1",
-    "slug": "rn-starter-1",
+    "name": "JFinsurance",
+    "slug": "JFinsurance",
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {
@@ -27,8 +27,8 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Allow app to access current location?"
-      },
+        "NSCameraUsageDescription": "upload images by camera",
+        "NSLocationWhenInUseUsageDescription": "Allow app to access current location?"},
       "bundleIdentifier":"Michael.jfinsurance"
     },
     "android": {
