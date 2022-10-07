@@ -28,15 +28,23 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "upload images by camera",
-        "NSLocationWhenInUseUsageDescription": "Allow app to access current location?"},
-      "bundleIdentifier":"Michael.jfinsurance"
+        "NSLocationWhenInUseUsageDescription": "Allow app to access current location?"
+      },
+      "bundleIdentifier": "Michael.jfinsurance"
     },
     "android": {
-      "adaptiveIcon": {
-      }
+      "adaptiveIcon": {},
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e936360e-2d9f-460a-8870-150bc7ab4e54"
+      }
     }
   }
 }

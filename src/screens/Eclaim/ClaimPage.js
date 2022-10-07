@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Text, StyleSheet, View, Modal, RefreshControl,LayoutAnimation,ActivityIndicator,ScrollView, Alert,Pressable } from 'react-native';
 import { useState, useEffect} from 'react';
-import {REACT_APP_BACKEND} from '@env'
 import { CustomLayoutSpring } from "react-native-animation-layout";
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import ClaimItem from '../subScreens/ClaimItem';
 import Spacer from '../subScreens/Spacer';
 import * as SecureStore from 'expo-secure-store';

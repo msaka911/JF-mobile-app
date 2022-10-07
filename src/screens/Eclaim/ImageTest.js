@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Platform ,ScrollView,TouchableOpacity,Text,Alert} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
-
-
+import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 export default function ImagePickerExample({image,setID,fileID,setImage}) {
-
 
   async function imageUploadRequest(result){
     var link="https://claim.mmoo.ca/Api/image"
@@ -29,25 +28,25 @@ export default function ImagePickerExample({image,setID,fileID,setImage}) {
       };
     
 
-      const temData=fetch(link, requestOptions)
+      // const temData=fetch(link, requestOptions)
 
-      .then(response => {
-       return response.json()
-      })
-      .then((data)=>{
-       if(data.status==`OK`){
-                return data.file_id
-      }
-      })
-       .catch(error=>
-        { console.log(error)
-          Alert.alert(
-          'Cannot upload file, check your internet','',[]
-        )
-      }
-       )
+      // .then(response => {
+      //  return response.json()
+      // })
+      // .then((data)=>{
+      //  if(data.status==`OK`){
+      //           return data.file_id
+      // }
+      // })
+      //  .catch(error=>
+      //   { console.log(error)
+      //     Alert.alert(
+      //     'Cannot upload file, check your internet','',[]
+      //   )
+      // }
+      //  )
     
-       return temData
+      //  return temData
     }
 
   const pickImage = async (image,fileID) => {
@@ -69,36 +68,35 @@ export default function ImagePickerExample({image,setID,fileID,setImage}) {
  
 
 const takePhotos = async () => {
-
-  let photo = await ImagePicker.launchCameraAsync();
-            if (!photo.cancelled) {
-              setImage([...image,photo.uri]);
-              var returnPhotoID=await imageUploadRequest(photo)
-              setID([...fileID,returnPhotoID])
-            }
-
-  // if (cameraPermission.status !== 'granted') {
-  //     const newPermission = await Permissions.askAsync(Permissions.CAMERA);
-  //     if (newPermission.status === 'granted') {
+  const { status }= await ImagePicker.getCameraPermissionsAsync()
+    
+  if (status === 'granted') {
+          let photo = await ImagePicker.launchCameraAsync();
+          if (!photo.cancelled) {
+            setImage([...image,photo.uri]);
+            var returnPhotoID=await imageUploadRequest(photo)
+            setID([...fileID,returnPhotoID])
+          }
             
-  //     }
-  // } else {
-  //       Alert.alert("Cannot access the camera",'',[])
-  // }
+  } else {
+    Alert.alert("Cannot access the camera",'',[])
+  }
 };
 
   return (
     <View style={{ flex:1,alignItems:'center'}}>
       <TouchableOpacity 
-        style={{alignItems: 'center',justifyContent: 'center',marginTop:100}} 
+        style={{alignItems: 'center',justifyContent: 'center',marginTop:100,flexDirection:'row'}} 
         onPress={()=>pickImage(image,fileID)}> 
-
-                <Text style={{fontSize:30,fontWeight:'bold'}}>{image.length>0?'More Images':`Choose Images`}</Text>
+                <Entypo name="folder-images" size={35} color="black" />
+                <Text style={{fontSize:30,fontWeight:'bold',marginLeft:10}}>{image.length>0?'More Images':`Choose Images`}</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-        style={{alignItems: 'center',justifyContent: 'center',marginTop:100}} 
+        <TouchableOpacity
+        
+        style={{alignItems: 'center',justifyContent: 'center',marginTop:100,flexDirection:'row'}} 
         onPress={()=>takePhotos()}> 
-                <Text style={{fontSize:30,fontWeight:'bold'}}>Taking Photos</Text>
+                <AntDesign name="camera" size={40} color="black" />
+                <Text style={{fontSize:30,fontWeight:'bold',marginLeft:10}}>Taking Photos</Text>
         </TouchableOpacity>
       <ScrollView horizontal={true} style={{flex: 1,flexDirection:'row',marginTop:30}}>
       {image && 

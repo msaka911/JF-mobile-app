@@ -6,37 +6,35 @@ import InputField from '../subScreens/InputField';
 import Checkbox from 'expo-checkbox';
 
 import ImagePickerExample from './ImageTest';
-import DropDownPicker from "react-native-dropdown-picker";
-import {useForm, Controller} from 'react-hook-form';
 
 import ProgressBar from '../subScreens/ProgressBar'
 import {SignatureScreen} from '../subScreens/Signature'
 import { Switch } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import Certification from './Certification';
+import { wrap } from 'lodash';
 
 const EclaimSubmit=({ navigation,route })=>{
-  const [dropdownOpen, setOpen] = useState(false);
-  const [dropdownValue, setValue] = useState(null);
-  const [dropdown, setDropdown] = useState([
-    { label: "Ontario", value: "ON" },
-    { label: "Quebec", value: "QC" },
-    { label: "British Columbia", value: "BC" },
-    { label: "Alberta", value: "AB" },
-    { label: "Prince Edward Island", value: "PE" },
-    { label: "Nova Scotia", value: "NS" },
-    { label: "New Brunswick", value: "NB" },
-    { label: "Saskatchewan", value: "SK" },
-    { label: "Newfoundland and Labrador", value: "NL" },
-    { label: "Manitoba", value: "MB" },
-  ]);
-
-  const onDropdownOpen = useCallback(() => {
-    // setOpen(false);
-  }, []);
-
-  const { handleSubmit, control } = useForm();
+  //------------------dropdown list design--------------------
+  // const [dropdownOpen, setOpen] = useState(false);
+  // const [dropdownValue, setValue] = useState(null);
+  // const [dropdown, setDropdown] = useState([
+  //   { label: "Ontario", value: "ON" },
+  //   { label: "Quebec", value: "QC" },
+  //   { label: "British Columbia", value: "BC" },
+  //   { label: "Alberta", value: "AB" },
+  //   { label: "Prince Edward Island", value: "PE" },
+  //   { label: "Nova Scotia", value: "NS" },
+  //   { label: "New Brunswick", value: "NB" },
+  //   { label: "Saskatchewan", value: "SK" },
+  //   { label: "Newfoundland and Labrador", value: "NL" },
+  //   { label: "Manitoba", value: "MB" },
+  // ]);
+  // const onDropdownOpen = useCallback(() => {
+  //   // setOpen(false);
+  // }, []);
+  // const { handleSubmit, control } = useForm();
 
 
 
@@ -119,7 +117,6 @@ const EclaimSubmit=({ navigation,route })=>{
     
 
       var returnID=fetch(link, requestOptions)
-
       .then(response => {
        return response.json()
       })
@@ -142,15 +139,22 @@ const EclaimSubmit=({ navigation,route })=>{
     }
 
     async function signSubmit(){
-       var returnedID=await imageUploadRequest("https://claim.mmoo.ca/Api/imagepng",[`data`,signature])
-       //---------url=https://claim.otcww.com/Api/imagepng------------------------------------------------------------
-       if(typeof returnedID!==`undefined`&&returnedID){
-          setsignID(returnedID)
-          return returnedID
-       }
-       else{
+      if(signature!=null){
+        var returnedID=await imageUploadRequest("https://claim.mmoo.ca/Api/imagepng",[`data`,signature])
+        //---------url=https://claim.otcww.com/Api/imagepng------------------------------------------------------------
+        if(typeof returnedID!==`undefined`&&returnedID){
+           setsignID(returnedID)
+           return returnedID
+        }
+        else{
+         return undefined
+        }
+      }
+      else{
+        Alert.alert("please sign a valid signature","",[])
         return undefined
-       }
+      }
+
     }
 
    
@@ -377,7 +381,7 @@ const EclaimSubmit=({ navigation,route })=>{
       };
 
 
-      fetch("https://claim.mmoo.ca/Api/submit", requestOptions)
+      const result=fetch("https://claim.mmoo.ca/Api/submit", requestOptions)
 
 //---------------------------------------------------url="https://claim.otcww.com/Api/submit"----------
       .then(response => {
@@ -402,9 +406,10 @@ const EclaimSubmit=({ navigation,route })=>{
         return null 
       }
        )
-
+      
       setImage([])
       setSign(``)
+      return result
    }
 
    const onChange = (event, selectedValue) => {
@@ -423,7 +428,7 @@ const onPhysician = (event, selectedValue) => {
 
   
     return(
-      <View style={{flex:0.99,padding:10}}>
+      <View style={{flex:0.99,padding:5}}>
         <KeyboardAwareScrollView contentContainerStyle={{alignItems: 'center'}}
         nestedScrollEnabled={true}
         persistentScrollbar={true}
@@ -431,7 +436,6 @@ const onPhysician = (event, selectedValue) => {
 
         <View  >
         {nextPage==1?
-              
         <View >
           <View style={{flexDirection:'row'}}>
             <InputField  style={{width:185}} content="Contact First Name" setValue={setFirstName}/>
@@ -575,72 +579,131 @@ const onPhysician = (event, selectedValue) => {
 
         {nextPage==4?
         <View >
-        {/* <TouchableOpacity 
-        style={{alignItems: 'center',justifyContent: 'center',marginTop:200}} 
-        onPress={()=>{
-                navigation.navigate('ImageBrowser')
-              }}> 
-
-                <Text style={{fontSize:25,fontWeight:'bold'}}>Choose Images</Text>
-
-        </TouchableOpacity>
-        <ScrollView horizontal={true} style={{flex: 1,flexDirection:'row',marginTop:15}}>
-        {photos && Object.keys(photos).map((item)=>{
-          return(<Image key={photos[item].name} source={{ uri: photos[item].uri }} style={{marginRight:10,marginTop:15, width: 300, height: 300 }} />)
-        })}
-        </ScrollView>  */}
           <ImagePickerExample setImage={setImage} image={image} setID={setID} fileID={fileID}></ImagePickerExample>
-
         </View>  
        :null}
+
+
+       {
+         nextPage==5?
+         <Certification setPage={setPage} nextPage={nextPage}></Certification>:null
+       }
      
         </View>
 
       </KeyboardAwareScrollView>
       
-      {nextPage==5?
+      {nextPage==6?
         <View style={{height:610,marginBottom:40}}>
             <SignatureScreen signature={signature} setSign={setSign}></SignatureScreen>
           </View>
        :null}
 
-      {nextPage==6?
-      <View style={{height:650,flexDirection:'row',flexWrap: 'wrap',justifyContent:'center',alignItems:'center'}}>
-        <Text style={{ fontWeight:'bold', marginTop:30,fontSize:15, flexBasis: '50%'}}>Your Policy Number:</Text>
-        <Text style={{ fontWeight:'bold', marginTop:30,fontSize:20}}> {info[0]||''}</Text>
+      {nextPage==7?
+      <View style={{flex:10}}>
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5}}>
+        <Text style={{ fontWeight:'bold',fontSize:18}}>Your Policy Number:</Text>
+        <Text style={{ fontWeight:'bold',  fontSize:18}}> {info[0]||''}</Text>
+        </View>
 
-        <Text style={{ fontWeight:'bold', marginTop:30,fontSize:15, flexBasis: '50%'}}>Effective Date:</Text>
-        <Text style={{ fontWeight:'bold', marginTop:30,fontSize:20}}> {info[1]||''}</Text>
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
 
-        <Text style={{ fontWeight:'bold',fontSize:15, flexBasis: '50%'}}>Insured Name:</Text>
-        <Text style={{ fontWeight:'bold', marginTop:30,fontSize:20, marginBottom:70}}> {info[2]||''}</Text>
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5}}>
+        <Text style={{ fontWeight:'bold',fontSize:18,marginTop:20,}}>Insured Name:</Text>
+        <Text style={{ fontWeight:'bold', marginTop:20,fontSize:18}}> {info[2]||''}</Text>
+        </View>
 
-        <Text style={{fontWeight:'600', marginTop:50,fontSize:18, flexBasis: '70%'}}>Have you submitted under the correct policy?</Text>
-            <Checkbox  value={checked}
-            style={{marginLeft:10}}
-             onValueChange={() => {
-             setChecked(!checked);
-      }
-            
-    }
-    />
-        <Text style={{ fontWeight:'600',marginTop:30,fontSize:18, flexBasis: '70%'}}>Have you submitted under the correct insured name?</Text>
-            <Checkbox  value={checked1}
-            style={{marginLeft:10}}
-             onValueChange={() => {
-             setChecked1(!checked1);
-      }}
-    />
-        <Text style={{ fontWeight:'600',marginTop:30, fontSize:18, flexBasis: '70%'}}>Is you claimed amount below $1000?</Text>
-            <Checkbox  value={checked2}
-            style={{marginLeft:10}}
-             onValueChange={() => {
-             setChecked2(!checked2);
-      }}
-    />
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5}}>
+        <Text style={{ fontWeight:'bold', marginTop:15,fontSize:18}}>Effective Date:</Text>
+        <Text style={{ fontWeight:'bold', marginTop:15,fontSize:18}}> {info[1]||''}</Text>
+        </View>
+
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5}}>
+        <Text style={{ fontWeight:'bold', marginTop:15,fontSize:18}}>Symptom:</Text>
+        <Text style={{ fontWeight:'bold', marginTop:15,fontSize:18}}> {diagnosis}</Text>
+        </View>
+
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5}}>
+        <Text style={{ fontWeight:'bold',fontSize:18,marginTop:15}}>Claim Amount:</Text>
+        <Text style={{ fontWeight:'bold', marginTop:15,fontSize:18}}> ${amount}</Text>
+        </View>
+
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5, marginBottom:50}}>
+        <Text style={{ fontWeight:'bold',fontSize:18,marginTop:20}}>Payee:</Text>
+        <Text style={{ fontWeight:'bold', marginTop:20,fontSize:18}}> 
+        {payees_payee_name||contactfirstname+" "+contactlastname} {payees_payment_type?payee_email:(payees_address||street_address, payees_city||city, payees_province||province,payees_postcode||postal_code)}
+        </Text>
+        </View>
+
+
+
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5,alignItems:'baseline'}}>
+          <Text style={{fontWeight:'600', marginTop:30,fontSize:18,flexBasis:'90%'}}>Have you submitted under the correct policy?</Text>
+              <Checkbox  value={checked}
+              style={{marginLeft:10}}
+              onValueChange={() => {
+              setChecked(!checked);
+                }
+              }
+              /> 
+         </View>
+
+         <View style={{flexDirection:'row', justifyContent:'space-between',margin:5 ,alignItems:'baseline'}}>
+          <Text style={{ fontWeight:'600',marginTop:30,fontSize:18,flexBasis:'90%'}}>Have you submitted under the correct insured name?</Text>
+              <Checkbox  value={checked1}
+              style={{marginLeft:10}}
+              onValueChange={() => {
+              setChecked1(!checked1);
+                }}
+              />
+        </View>
+
+        <View style={{flexDirection:'row', justifyContent:'space-between',margin:5,alignItems:'baseline'}}>
+          <Text style={{ fontWeight:'600',marginTop:30, fontSize:18,flexBasis:'90%'}}>Is you claimed amount below $1000?</Text>
+              <Checkbox  value={checked2}
+              style={{marginLeft:10}}
+              onValueChange={() => {
+              setChecked2(!checked2);
+            }}
+          />
+        </View>
+
         </View>
        :null}
-       <View style={{flexDirection:'row',justifyContent:'space-between',width:350, alignSelf:'center'}}>
+       <View style={[{flexDirection:'row',justifyContent:'space-between',width:350, alignSelf:'center' },nextPage==5?{display: 'none'}:null]}>
       <TouchableOpacity 
         style={{}}
         onPress={()=>{
@@ -652,49 +715,53 @@ const onPhysician = (event, selectedValue) => {
 
         </TouchableOpacity>
 
-
       <TouchableOpacity 
         style={{}}
         onPress={async()=>{
-          if(nextPage==5){
+          if(nextPage==6){
             var verified=await signSubmit()
             if (typeof verified!="undefined"){
                  setPage(nextPage+1)
             }
-            else{
-              Alert.alert("Please sign your name")
-            }
 //--------------------------------------------------------------------------------bug------
           }
-          else if(nextPage==6){
+          else if(nextPage==7){
              if(checked&&checked1&&checked2){
-              await onSubmit()
-              setPage(1)
-              navigation.navigate('E-claim Portal')   
+              var responseResult=await onSubmit()
+              if(responseResult!=null){
+                setPage(1)
+                navigation.navigate('E-claim Portal')
+              }
              }
              else{
               Alert.alert("Please tick all the fields")
              }  
           }
+
           else if(nextPage==4){
             // await imageSubmit()
+
             if(image.length<1){
               Alert.alert("Please select at least one image to upload")
             }
             else{
-              setPage(nextPage+1)
+              if (fileID.length<1){
+                Alert.alert("Image upload failed")
+              }
+              else{
+                setPage(nextPage+1)
+              }
             }
-           
           }
           else{
             setPage(nextPage+1)
           }
         }}> 
-        <Text style={{fontSize:30,fontWeight:'bold'}}>{nextPage==6?`Submit`:`Next`}</Text>
+        <Text style={{fontSize:30,fontWeight:'bold'}}>{nextPage==7?`Submit`:`Next`}</Text>
 
         </TouchableOpacity>
         </View>
-        <ProgressBar style={{alignItems: 'center',height:15,marginTop:30, borderRadius:10}} progress={Math.floor(nextPage/6*100)/100}></ProgressBar>
+        <ProgressBar style={{alignItems: 'center',height:15,marginTop:30, borderRadius:10}} progress={Math.floor(nextPage/7*100)/100}></ProgressBar>
 
       </View>
 
